@@ -28,4 +28,15 @@ public class Usuario {
     public String getSenha() {
         return senha;
     }
+    
+    @Override
+    public boolean equals(Object o){
+        Usuario u = (Usuario) o;
+        if (this.login.equals(u.login)){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 }
