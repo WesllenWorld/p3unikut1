@@ -20,7 +20,7 @@ public class Main {
                 op = in.nextInt();
             }
             switch (op) {
-                case 1:
+                case 1: //criação de conta
                     in.nextLine();
                     System.out.println("Insira os seguintes dados para criar sua conta:");
                     System.out.println("Nome de login:");
@@ -42,7 +42,7 @@ public class Main {
                     }
                     break;
 
-                case 2:
+                case 2: //login + interações do usuário
                     in.nextLine();
                     System.out.println("Nome de login: ");
                     login = in.next();
@@ -64,7 +64,7 @@ public class Main {
 
 
     }
-    public static void menuInicial() {
+    public static void menuInicial() {//Menu inicial 
         System.out.println("BEM VINDO AO UNIKUT, A MAIS NOVA FORMA DE MANTER A UNICAP MAIS PERTINHO DE VOCÊ.");
 
         System.out.println("Tecle - 1 – Para fazer parte da comunidade do UNIKUT.");
@@ -72,7 +72,7 @@ public class Main {
         System.out.println("Tecle 0 – para sair do programa.");
     }
 
-    public static void menuDeConta(){
+    public static void menuDeConta(){//Menu do usuário logado
 
     }
 
