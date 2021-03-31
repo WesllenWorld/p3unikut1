@@ -29,7 +29,7 @@ public class Usuario {
         return senha;
     }
     
-    @Override
+    @Override //Comparador de usuários utilizando equals com o login
     public boolean equals(Object o){
         Usuario u = (Usuario) o;
         if (this.login.equals(u.login)){
