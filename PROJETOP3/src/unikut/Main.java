@@ -1,3 +1,11 @@
+/*
+    Componentes do grupo:
+    Diogo dos Santos Ávila
+    Flávio Antônio Medeiros de Farias
+    Ryan Pereira Lima da Silva
+    Wesllen Leonardo de Lira Santos
+
+*/
 package unikut;
 import classes.*;
 
@@ -48,6 +56,7 @@ public class Main {
                     login = in.next();
                     System.out.println("Senha: ");
                     senha = in.next();
+                    
                     do{
                         menuDeConta();
                         acaoDeConta = in.nextInt();
