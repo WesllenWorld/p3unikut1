@@ -15,6 +15,18 @@ public class Contas {
         }
     }
 
+    public boolean login(Usuario u){//Login
+
+        for(int i = 0; i<usuarios.size();i++){
+            if(usuarios.get(i).getLogin().equals(u.getLogin())){
+                if(usuarios.get(i).getSenha().equals(u.getSenha())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     //Demais métodos
 
 
