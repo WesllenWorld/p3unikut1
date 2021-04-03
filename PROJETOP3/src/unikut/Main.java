@@ -62,10 +62,59 @@ public class Main {
                     us = new Usuario(login, senha, "");
                     logado = social.login(us);
                     if (logado) {
-                        System.out.println("Bem-vindo, " + us.getNomeDeUsuario() + "!");
+                        System.out.println("Bem-vindo!");
                         do {
                             menuDeConta();
                             acaoDeConta = in.nextInt();
+                            while (acaoDeConta < 0 || acaoDeConta > 3) {
+                                System.out.println("Opção inválida. Tente:");
+                                menuDeConta();
+                                acaoDeConta = in.nextInt();
+                            }
+                            switch (acaoDeConta) {
+                                case 1:
+                                    // Permita a um usuário cadastrado editar atributos de seu perfil. Ele deve
+                                    // poder modificar qualquer atributo do perfil.
+                                    System.out.println("O que deseja editar? ");
+                                    System.out.println("1 - Apenas o Nome;");
+                                    System.out.println("2 - Apenas a senha;");
+                                    System.out.println("3 - Nome e senha.");
+                                    op = in.nextInt();
+                                    switch (op) {
+                                        case 1:
+                                            in.nextLine();
+                                            System.out.println("Digite o novo nome: ");
+                                            nome = in.nextLine();
+                                            us = new Usuario(login, null, nome);
+                                            social.editarCadastro(us);
+                                            break;
+                                        case 2:
+                                            in.nextLine();
+                                            System.out.println("Digite a nova senha: ");
+                                            senha = in.next();
+                                            us = new Usuario(login, senha, null);
+                                            social.editarCadastro(us);
+                                            break;
+                                        case 3:
+                                            in.nextLine();
+                                            System.out.println("Digite o novo nome: ");
+                                            nome = in.nextLine();
+                                            System.out.println("Digite a nova senha: ");
+                                            senha = in.next();
+                                            us = new Usuario(login, senha, nome);
+                                            social.editarCadastro(us);
+                                            break;
+                                    }
+
+
+                                    break;
+                                case 2://Adicionar amigo
+
+                                    break;
+                                case 3:// Envio de recados
+
+                                    break;
+                            }
 
 
                         } while (acaoDeConta != 0);
@@ -81,7 +130,7 @@ public class Main {
 
     }
 
-    public static void menuInicial() {//Menu inicial 
+    public static void menuInicial() {//Menu inicial
         System.out.println("BEM-VINDO AO UNIKUT, A MAIS NOVA FORMA DE MANTER A UNICAP MAIS PERTINHO DE VOCÊ.");
 
         System.out.println("Tecle - 1 – Para fazer parte da comunidade do UNIKUT.");
@@ -94,6 +143,7 @@ public class Main {
         System.out.println("1 – Editar perfil.");
         System.out.println("2 – Adicionar um amigo.");
         System.out.println("3 - Enviar um recado.");
+        System.out.println("0 - Desconectar");
     }
 
 
