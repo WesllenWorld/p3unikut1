@@ -49,11 +49,12 @@ public class Contas {
         }
     }
 
-    public boolean adicionarAmigo(Usuario usReceptor, Usuario usEmissor) {
+    public int adicionarAmigo(Usuario usReceptor, Usuario usEmissor) {
+        int retorno = -1;
         if (usEmissor.equals(usReceptor) == true) {//Se ambos são iguais
-            return false;
+            return retorno;
         } else if (usuarios.contains(usReceptor) == false) {//Se o receptor está na lista
-            return false;
+            return retorno;
         } else {
             for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
                 if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
@@ -64,18 +65,19 @@ public class Contas {
 
             for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do emissor
                 if (usuarios.get(i).getLogin().equals(usEmissor.getLogin())) {
-                    if (!usuarios.get(i).adicionar(usReceptor)) {
-                        return false;
+                    retorno = usuarios.get(i).adicionar(usReceptor);
+                    if (retorno == -1) {
+                        return -1;
                     } else {
 
                     }
                 }
             }
-            return true;
+            return retorno;
         }
     }
 
-    public String exibirAmigos(Usuario u, int op) {//Exibir amigos ou pedidos pendentes
+    public String exibirAmigos(Usuario u, int op) {
         int i;
         String info;
         for (i = 0; i < usuarios.size(); i++) {
@@ -83,16 +85,16 @@ public class Contas {
                 break;
             }
         }
-        if (op == 1) {//Amigos
+        if (op == 1) {
             info = usuarios.get(i).listaDeAmigos();
             return info;
-        } else {//Pendentes
+        } else {
             info = usuarios.get(i).listaDePendentes();
             return info;
         }
     }
 
-    public String exibirRecados(Usuario u) {//Mostrar recados
+    public String exibirRecados(Usuario u) {
         int i;
         String info;
         for (i = 0; i < usuarios.size(); i++) {
@@ -129,7 +131,7 @@ public class Contas {
                 break;
             }
         }
-        return u.limparRecados();//Retorna true ou false
+        return u.limparRecados();
     }
 
 
