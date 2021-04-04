@@ -14,10 +14,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Usuario us;
+        Usuario us, usEmissor, usReceptor;
         Contas social = new Contas();
         Scanner in = new Scanner(System.in);
-        String nome, login, senha, logado, exibirListas;
+        String nome, login, senha, logado, exibirListas, recado;
         int op, acaoDeConta;
         boolean EstadoDeLogado;
 
@@ -66,7 +66,7 @@ public class Main {
                         logado = login;
                         do {
                             menuDeConta();
-                            acaoDeConta = in.nextInt();
+                            acaoDeConta = in.nextInt();//O que a conta pode fazer
                             while (acaoDeConta < 0 || acaoDeConta > 3) {
                                 System.out.println("Opção inválida. Tente:");
                                 menuDeConta();
@@ -86,7 +86,7 @@ public class Main {
                                             in.nextLine();
                                             System.out.println("Digite o novo nome: ");
                                             nome = in.nextLine();
-                                            us = new Usuario(login, null, nome);
+                                            us = new Usuario(logado, null, nome);
                                             social.editarCadastro(us);
                                             System.out.println("Seu cadastro foi atualizado.");
                                             break;
@@ -94,7 +94,7 @@ public class Main {
                                             in.nextLine();
                                             System.out.println("Digite a nova senha: ");
                                             senha = in.next();
-                                            us = new Usuario(login, senha, null);
+                                            us = new Usuario(logado, senha, null);
                                             social.editarCadastro(us);
                                             System.out.println("Seu cadastro foi atualizado.");
                                             break;
@@ -104,40 +104,47 @@ public class Main {
                                             nome = in.nextLine();
                                             System.out.println("Digite a nova senha: ");
                                             senha = in.next();
-                                            us = new Usuario(login, senha, nome);
+                                            us = new Usuario(logado, senha, nome);
                                             social.editarCadastro(us);
                                             System.out.println("Seu cadastro foi atualizado.");
                                             break;
                                     }
-
-
                                     break;
+
                                 case 2://Aba de amigos
                                     menuAmigos();
                                     op = in.nextInt();
+                                    while (op < 0 || op > 2) {
+                                        System.out.println("Opção inválida. Tente:");
+                                        menuAmigos();
+                                        op = in.nextInt();
+                                    }
                                     switch (op) {
                                         case 1://Adicionar amigo
                                             in.nextLine();
                                             System.out.println("Informe o login do usuário a ser adicionado:");
                                             login = in.next();
-                                            Usuario usReceptor = new Usuario(login, "", "");
-                                            Usuario usEmissor = new Usuario(logado, "", "");
+                                            usReceptor = new Usuario(login, "", "");
+                                            usEmissor = new Usuario(logado, "", "");
                                             boolean statusDoPedido = social.adicionarAmigo(usReceptor, usEmissor);
                                             if (statusDoPedido) {
                                                 System.out.println("Pedido de amizade enviado. Aguardando aceitação.");
                                             } else {
-                                                System.out.println("Não foi possível enviar um pedido de amizade para o usuário solicitado.");
+                                                System.out.println("Não foi possível enviar um pedido de amizade para o usuário solicitado. Verifique se o login está correto e tente novamente.");
                                             }
 
                                             break;
                                         case 2:
-                                            menuAmigos();//Listar amigos e pedidos de amizade
+                                            System.out.println("1 - Listar amigos");
+                                            System.out.println("2 - Pedidos pendentes");
+                                            System.out.println("0 - Sair");//Listar amigos e pedidos de amizade
                                             op = in.nextInt();
                                             while (op < 0 || op > 2) {
                                                 System.out.println("Opção inválida. Tente:");
                                                 menuAmigos();
                                                 op = in.nextInt();
                                             }
+
                                             switch (op) {
                                                 case 0://Sair
                                                     break;
@@ -151,15 +158,58 @@ public class Main {
                                                     usEmissor = new Usuario(logado, "", "");
                                                     exibirListas = social.exibirAmigos(usEmissor, op);
                                                     System.out.println("Envie convites para remover a pendência e que vocês sejam amigos!");
-                                                    System.out.println("Convites de amizade pendentes:");
+                                                    System.out.println("Há convites de amizade pendentes de:");
                                                     System.out.println(exibirListas);
                                                     break;
                                             }
                                             break;
                                     }
                                     break;
-                                case 3:// Envio de recados
 
+                                case 3://Recados
+                                    menuRecados();
+                                    op = in.nextInt();
+                                    while (op < 0 || op > 3) {
+                                        System.out.println("Opção inválida. Tente:");
+                                        menuRecados();
+                                        op = in.nextInt();
+                                    }
+                                    switch (op) {
+                                        case 0://Sair
+                                            break;
+                                        case 1://Exibir recados
+                                            usEmissor = new Usuario(logado, "", "");
+                                            exibirListas = social.exibirRecados(usEmissor);
+                                            System.out.println("Mensagens recentes serão sempre as que estão mais em baixo.");
+                                            System.out.println("Recados:");
+                                            System.out.println(exibirListas);
+                                            break;
+                                        case 2: //Enviar recado
+                                            in.nextLine();
+                                            System.out.println("Insira aqui o login do destinatário: ");
+                                            login = in.next();
+                                            System.out.println("Escreva seu recado: ");
+                                            in.nextLine();
+                                            recado = in.nextLine();
+                                            usEmissor = new Usuario(logado, "", "");
+                                            usReceptor = new Usuario(login, "", "");
+                                            boolean recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado);
+                                            if (recadoEnviado) {
+                                                System.out.println("Mensagem enviada. Envie mais mensagens ou aguarde uma resposta!");
+                                            } else {
+                                                System.out.println("Não foi possível enviar o recado. Verifique os dados de entrada e tente novamente.");
+                                            }
+                                            break;
+                                        case 3://Limpar caixa de recados
+                                            usEmissor = new Usuario(logado, "", "");
+                                            boolean limparRecados = social.excluirRecados(usEmissor);
+                                            if (limparRecados) {
+                                                System.out.println("Seus recados foram excluídos com sucesso.");
+                                            } else {
+                                                System.out.println("Você não possui nenhum recado para ser excluído.");
+                                            }
+                                            break;
+                                    }
                                     break;
                             }
 
@@ -187,16 +237,24 @@ public class Main {
 
     public static void menuDeConta() {//Menu do usuário logado
         System.out.println("Funções disponíveis:");
-        System.out.println("1 – Editar perfil.");
-        System.out.println("2 – Adicionar um amigo.");
-        System.out.println("3 - Enviar um recado.");
+        System.out.println("1 – Editar perfil");
+        System.out.println("2 – Amigos");
+        System.out.println("3 - Recados");
         System.out.println("0 - Desconectar");
     }
 
-    public static void menuAmigos() {
+    public static void menuAmigos() {//Menu de amigos
         System.out.println("Menu de amigos:");
-        System.out.println("1 - Lista de amigos");
-        System.out.println("2 - Pedidos de amizade pendentes");
+        System.out.println("1 - Adicionar amigos");
+        System.out.println("2 - Listar amigos ou pedidos de amizade pendentes");
+        System.out.println("0 - Voltar");
+    }
+
+    public static void menuRecados() {//Menu referente aos recados
+        System.out.println("Menu de recados:");
+        System.out.println("1 - Ver recados");
+        System.out.println("2 - Mandar um recado");
+        System.out.println("3 - Excluir recados");
         System.out.println("0 - Voltar");
     }
 
