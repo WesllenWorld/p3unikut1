@@ -126,9 +126,11 @@ public class Main {
                                             login = in.next();
                                             usReceptor = new Usuario(login, "", "");
                                             usEmissor = new Usuario(logado, "", "");
-                                            boolean statusDoPedido = social.adicionarAmigo(usReceptor, usEmissor);
-                                            if (statusDoPedido) {
+                                            int statusDoPedido = social.adicionarAmigo(usReceptor, usEmissor);
+                                            if (statusDoPedido == 0) {
                                                 System.out.println("Pedido de amizade enviado. Aguardando aceitação.");
+                                            } else if (statusDoPedido == 1) {
+                                                System.out.println("Pedido de amizade aceito! Vocês agora são amigos.");
                                             } else {
                                                 System.out.println("Não foi possível enviar um pedido de amizade para o usuário solicitado. Verifique se o login está correto e tente novamente.");
                                             }
@@ -243,14 +245,14 @@ public class Main {
         System.out.println("0 - Desconectar");
     }
 
-    public static void menuAmigos() {//Menu de amigos
+    public static void menuAmigos() {
         System.out.println("Menu de amigos:");
         System.out.println("1 - Adicionar amigos");
         System.out.println("2 - Listar amigos ou pedidos de amizade pendentes");
         System.out.println("0 - Voltar");
     }
 
-    public static void menuRecados() {//Menu referente aos recados
+    public static void menuRecados() {
         System.out.println("Menu de recados:");
         System.out.println("1 - Ver recados");
         System.out.println("2 - Mandar um recado");
