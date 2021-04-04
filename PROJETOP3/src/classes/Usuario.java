@@ -39,32 +39,32 @@ public class Usuario {
         return senha;
     }
 
-    public boolean adicionar(Usuario u) {//Adicionar amigos
+    public int adicionar(Usuario u) {//Adicionar amigos
         if (this.pendentes.contains(u)) {//Se já existe um convite pendente de "u"
             this.amigos.add(u);
             u.amigos.add(this);
             pendentes.remove(u);
             u.pendentes.remove(this);
-
+            return 1;//1 corresponde à aceitação do pedido de amizade
         } else if (u.pendentes.contains(this)) {//Se "u" possui um convite do usuário
-            return false;
+            return -1;//falha
         } else if (u.amigos.contains(this) && this.amigos.contains(u)) {//Se ambos são amigos
-            return false;
+            return -1;//falha
         } else {
             u.pendentes.add(this);
         }
-        return true;
+        return 0;//0 corresponde ao envio do pedido, permanecendo como 'pendente'
     }
 
-    public void adicionarRecado(String recado) {//Adiciona String([Quem enviou]: + [recado]) na lista de recados
+    public void adicionarRecado(String recado) {
         recados.add(recado);
     }
 
-    public boolean limparRecados() {//Excluir recados
-        if (recados.size() == 0) {//Caso a lista esteja vazia
-            return false;//Retorna falso, indicando que não excluiu nada (pois não havia nada)
-        } else {//Caso a lista possua pelo menos um recado
-            recados.clear();//Remove todos os recados
+    public boolean limparRecados() {
+        if (recados.size() == 0) {
+            return false;
+        } else {
+            recados.clear();
             return true;
         }
     }
@@ -100,7 +100,7 @@ public class Usuario {
         return list;
     }
 
-    public String listaRecados() {//Exibir recados
+    public String listaRecados() {//Exibir pendentes
         String list = "";
         for (int i = 0; i < recados.size(); i++) {
             list += recados.get(i) + "\n";
