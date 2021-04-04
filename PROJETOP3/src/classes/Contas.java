@@ -75,7 +75,7 @@ public class Contas {
         }
     }
 
-    public String exibirAmigos(Usuario u, int op) {
+    public String exibirAmigos(Usuario u, int op) {//Exibir amigos ou pedidos pendentes
         int i;
         String info;
         for (i = 0; i < usuarios.size(); i++) {
@@ -83,16 +83,54 @@ public class Contas {
                 break;
             }
         }
-        if (op == 1) {
+        if (op == 1) {//Amigos
             info = usuarios.get(i).listaDeAmigos();
             return info;
-        } else {
+        } else {//Pendentes
             info = usuarios.get(i).listaDePendentes();
             return info;
         }
     }
 
-    //Demais métodos
+    public String exibirRecados(Usuario u) {//Mostrar recados
+        int i;
+        String info;
+        for (i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getLogin().equals(u.getLogin())) {
+                break;
+            }
+        }
+        info = usuarios.get(i).listaRecados();
+        return info;
+    }
+
+    public boolean enviarRecado(Usuario usEmissor, Usuario usReceptor, String mensagem) {
+        String recado = usEmissor.getLogin() + ":" + mensagem;
+        if (usEmissor.equals(usReceptor) == true) {//Se ambos são iguais
+            return false;
+        } else if (usuarios.contains(usReceptor) == false) {//Se o receptor está na lista
+            return false;
+        } else {
+            for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
+                if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
+                    usReceptor = usuarios.get(i);
+                    break;
+                }
+            }
+            usReceptor.adicionarRecado(recado);
+        }
+        return true;
+    }
+
+    public boolean excluirRecados(Usuario u) {
+        for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
+            if (usuarios.get(i).getLogin().equals(u.getLogin())) {
+                u = usuarios.get(i);
+                break;
+            }
+        }
+        return u.limparRecados();//Retorna true ou false
+    }
 
 
 }
