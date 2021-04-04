@@ -49,6 +49,48 @@ public class Contas {
         }
     }
 
+    public boolean adicionarAmigo(Usuario usReceptor, Usuario usEmissor) {
+        if (usEmissor.equals(usReceptor) == true) {//Se ambos são iguais
+            return false;
+        } else if (usuarios.contains(usReceptor) == false) {//Se o receptor está na lista
+            return false;
+        } else {
+            for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
+                if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
+                    usReceptor = usuarios.get(i);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do emissor
+                if (usuarios.get(i).getLogin().equals(usEmissor.getLogin())) {
+                    if (!usuarios.get(i).adicionar(usReceptor)) {
+                        return false;
+                    } else {
+
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    public String exibirAmigos(Usuario u, int op) {
+        int i;
+        String info;
+        for (i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getLogin().equals(u.getLogin())) {
+                break;
+            }
+        }
+        if (op == 1) {
+            info = usuarios.get(i).listaDeAmigos();
+            return info;
+        } else {
+            info = usuarios.get(i).listaDePendentes();
+            return info;
+        }
+    }
 
     //Demais métodos
 
