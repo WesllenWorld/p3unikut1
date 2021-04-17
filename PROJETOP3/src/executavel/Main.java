@@ -7,7 +7,8 @@
 */
 package executavel;
 
-import logica.*;
+import usuarios.Usuario;
+import interacoesDeConta.contas;
 
 import java.util.Scanner;
 
