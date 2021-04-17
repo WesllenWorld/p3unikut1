@@ -8,7 +8,7 @@
 package executavel;
 
 import usuarios.Usuario;
-import interacoesDeConta.contas;
+import interacoesDeContas.Contas;
 
 import java.util.Scanner;
 
