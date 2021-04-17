@@ -5,9 +5,9 @@
     Ryan Pereira Lima da Silva
     Wesllen Leonardo de Lira Santos
 */
-package unikut;
+package executavel;
 
-import classes.*;
+import logica.*;
 
 import java.util.Scanner;
 
