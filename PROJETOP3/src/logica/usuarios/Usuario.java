@@ -1,4 +1,4 @@
-package classes;
+package usuarios;
 
 import java.util.ArrayList;
 
