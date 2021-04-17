@@ -1,4 +1,4 @@
-package classes;
+package interacoesDeConta;
 
 import java.util.ArrayList;
 import java.util.List;
