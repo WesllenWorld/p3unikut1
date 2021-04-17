@@ -1,5 +1,5 @@
-package interacoesDeConta;
-
+package interacoesDeContas;
+import usuarios.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
