@@ -114,7 +114,7 @@ public class Usuario {
     public String decodificar(int indice, String palavraChave) {/////
         if (recados.size() == 0) {
             return "Você não possui recados.";
-        } else if (indice < 0 || indice > recados.size() + 1) {
+        } else if (indice < 0 || indice >= recados.size()) {
             return "O número para a mensagem não está disponível.";
         } else if (!(recados.get(indice) instanceof MensagemSecreta)) {
             return "A mensagem selecionada não é uma mensagem secreta.";
