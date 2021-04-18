@@ -13,6 +13,7 @@ import interacoesDeContas.Contas;
 import java.util.Scanner;
 
 public class Main {
+    //Equipe: Tatooine Tech
     //ALUNO : WESLLEN LEONARDO DE LIRA SANTOS
     //FUNCIONALIDADE A SER IMPLEMENTADA: C
     //Nota: O sinal "/////" refere-se a trechos que foram alterados (visível no vídeo da atividade)
