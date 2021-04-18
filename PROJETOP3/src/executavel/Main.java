@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class Main {
     //ALUNO : WESLLEN LEONARDO DE LIRA SANTOS
     //FUNCIONALIDADE A SER IMPLEMENTADA: C
+    //Nota: O sinal "/////" refere-se a trechos que foram alterados (visível no vídeo da atividade)
     public static void main(String[] args) {
         Usuario us, usEmissor, usReceptor;
         Contas social = new Contas();
