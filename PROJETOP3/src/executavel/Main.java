@@ -261,10 +261,7 @@ public class Main {
 					}
 
 //login administrador
-//login administrador
-//login administrador
-//login administrador
-
+					
 					break;
 				}
 
