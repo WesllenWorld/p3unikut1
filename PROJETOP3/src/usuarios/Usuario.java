@@ -1,11 +1,14 @@
 package usuarios;
 
+import mensagens.Mensagem;
+import mensagens.MensagemSecreta;
+
 import java.util.ArrayList;
 
 public class Usuario {
     private String login, senha, nomeDeUsuario;
     private ArrayList<Usuario> amigos, pendentes;
-    private ArrayList<String> recados;
+    private ArrayList<Mensagem> recados;
 
     public Usuario(String login, String senha, String nomeDeUsuario) {
         this.login = login;
@@ -56,7 +59,7 @@ public class Usuario {
         return 0;//0 corresponde ao envio do pedido, permanecendo como 'pendente'
     }
 
-    public void adicionarRecado(String recado) {
+    public void adicionarRecado(Mensagem recado) {/////
         recados.add(recado);
     }
 
@@ -103,10 +106,22 @@ public class Usuario {
     public String listaRecados() {//Exibir pendentes
         String list = "";
         for (int i = 0; i < recados.size(); i++) {
-            list += recados.get(i) + "\n";
+            list += (i + 1) + " - " + recados.get(i).toString() + "\n";/////
         }
         return list;
     }
 
+    public String decodificar(int indice, String palavraChave) {/////
+        if (recados.size() == 0) {
+            return "Você não possui recados.";
+        } else if (indice < 0 || indice > recados.size() + 1) {
+            return "O número para a mensagem não está disponível.";
+        } else if (!(recados.get(indice) instanceof MensagemSecreta)) {
+            return "A mensagem selecionada não é uma mensagem secreta.";
+        } else {
+            String recado = ((MensagemSecreta) recados.get(indice)).verificarAcesso(palavraChave);
+            return recado;
+        }
+    }
 
 }
