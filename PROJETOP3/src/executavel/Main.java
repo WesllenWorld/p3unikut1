@@ -13,14 +13,15 @@ import interacoesDeContas.Contas;
 import java.util.Scanner;
 
 public class Main {
-
+    //ALUNO : WESLLEN LEONARDO DE LIRA SANTOS
+    //FUNCIONALIDADE A SER IMPLEMENTADA: C
     public static void main(String[] args) {
         Usuario us, usEmissor, usReceptor;
         Contas social = new Contas();
         Scanner in = new Scanner(System.in);
-        String nome, login, senha, logado, exibirListas, recado;
-        int op, acaoDeConta;
-        boolean EstadoDeLogado;
+        String nome, login, senha, logado, exibirListas, recado, palavraChave;
+        int op, acaoDeConta, indiceMensagem;
+        boolean EstadoDeLogado, recadoEnviado;
 
         do {
             menuInicial();
@@ -172,7 +173,7 @@ public class Main {
                                 case 3://Recados
                                     menuRecados();
                                     op = in.nextInt();
-                                    while (op < 0 || op > 3) {
+                                    while (op < 0 || op > 4) {
                                         System.out.println("Opção inválida. Tente:");
                                         menuRecados();
                                         op = in.nextInt();
@@ -187,16 +188,32 @@ public class Main {
                                             System.out.println("Recados:");
                                             System.out.println(exibirListas);
                                             break;
-                                        case 2: //Enviar recado
+                                        case 2: //Enviar recado /////
                                             in.nextLine();
                                             System.out.println("Insira aqui o login do destinatário: ");
                                             login = in.next();
                                             System.out.println("Escreva seu recado: ");
                                             in.nextLine();
                                             recado = in.nextLine();
+                                            System.out.println("O recado será enviado como:");/////{
+                                            System.out.println("1 - Mensagem comum");
+                                            System.out.println("2 - Mensagem secreta");
+                                            op = in.nextInt();
+                                            while (op < 1 || op > 2) {
+                                                System.out.println("Opção inválida. Tente:");
+                                                System.out.println("1 - Mensagem comum");
+                                                System.out.println("2 - Mensagem secreta");
+                                                op = in.nextInt();
+                                            }/////}
                                             usEmissor = new Usuario(logado, "", "");
                                             usReceptor = new Usuario(login, "", "");
-                                            boolean recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado);
+                                            if (op == 1) {/////{
+                                                recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado, "");
+                                            } else {
+                                                System.out.println("Digite a palavra-chave para a mensagem:");
+                                                palavraChave = in.next();
+                                                recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado, palavraChave);
+                                            }/////}
                                             if (recadoEnviado) {
                                                 System.out.println("Mensagem enviada. Envie mais mensagens ou aguarde uma resposta!");
                                             } else {
@@ -211,6 +228,22 @@ public class Main {
                                             } else {
                                                 System.out.println("Você não possui nenhum recado para ser excluído.");
                                             }
+                                            break;
+                                        case 4: /////
+                                            in.nextLine();
+                                            usEmissor = new Usuario(logado, "", "");
+                                            exibirListas = social.exibirRecados(usEmissor);
+                                            System.out.println(exibirListas);
+
+                                            System.out.println("Insira o número da mensagem a ser decodificada: ");
+                                            indiceMensagem = in.nextInt();
+                                            indiceMensagem--;
+                                            System.out.println("Digite a palavra-chave da mensagem: ");
+                                            in.nextLine();
+                                            palavraChave = in.nextLine();
+                                            String result = social.decodificarRecado(usEmissor, indiceMensagem, palavraChave);
+                                            System.out.println(result+"\n");
+
                                             break;
                                     }
                                     break;
@@ -258,6 +291,7 @@ public class Main {
         System.out.println("1 - Ver recados");
         System.out.println("2 - Mandar um recado");
         System.out.println("3 - Excluir recados");
+        System.out.println("4 - Decodificar mensagem secreta");/////
         System.out.println("0 - Voltar");
     }
 
