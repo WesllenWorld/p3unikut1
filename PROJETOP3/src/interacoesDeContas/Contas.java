@@ -1,5 +1,9 @@
 package interacoesDeContas;
+
+import mensagens.Mensagem;
+import mensagens.MensagemSecreta;
 import usuarios.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,21 +109,32 @@ public class Contas {
         info = usuarios.get(i).listaRecados();
         return info;
     }
-
-    public boolean enviarRecado(Usuario usEmissor, Usuario usReceptor, String mensagem) {
-        String recado = usEmissor.getLogin() + ":" + mensagem;
+    
+    public boolean enviarRecado(Usuario usEmissor, Usuario usReceptor, String mensagem, String palavraChave) {/////PARAMETRO A MAIS
         if (usEmissor.equals(usReceptor) == true) {//Se ambos são iguais
             return false;
         } else if (usuarios.contains(usReceptor) == false) {//Se o receptor está na lista
             return false;
         } else {
-            for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
-                if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
-                    usReceptor = usuarios.get(i);
-                    break;
+            if (palavraChave.equals("")) {/////
+                Mensagem recado = new Mensagem(usEmissor.getLogin(), mensagem);
+                for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
+                    if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
+                        usReceptor = usuarios.get(i);
+                        break;
+                    }
                 }
+                usReceptor.adicionarRecado(recado);
+            } else {/////
+                Mensagem recado = new MensagemSecreta(usEmissor.getLogin(), mensagem, palavraChave);/////
+                for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
+                    if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
+                        usReceptor = usuarios.get(i);
+                        break;
+                    }
+                }
+                usReceptor.adicionarRecado(recado);
             }
-            usReceptor.adicionarRecado(recado);
         }
         return true;
     }
@@ -132,6 +147,18 @@ public class Contas {
             }
         }
         return u.limparRecados();
+    }
+
+    public String decodificarRecado(Usuario usEmissor, int indice, String palavraChave) {/////
+        for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do usuário
+            if (usuarios.get(i).getLogin().equals(usEmissor.getLogin())) {
+                usEmissor = usuarios.get(i);
+                break;
+            }
+        }
+
+        String mensagemDeRetorno = usEmissor.decodificar(indice, palavraChave);
+        return mensagemDeRetorno;
     }
 
 
