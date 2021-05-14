@@ -8,6 +8,8 @@ public class Usuario {
     private String login, senha, nomeDeUsuario;
     private ArrayList<Usuario> amigos, pendentes;
     private ArrayList<Mensagem> recados;
+    private ArrayList<String> murais;
+
     boolean adm;
 
     public Usuario(String login, String senha, String nomeDeUsuario) {
@@ -17,6 +19,7 @@ public class Usuario {
         amigos = new ArrayList();
         pendentes = new ArrayList();
         recados = new ArrayList();
+        murais = new ArrayList();
         adm = false;
     }
 
@@ -110,6 +113,28 @@ public class Usuario {
         return list;
     }
 
+    public String listaMurais() {//Exibir murais
+        String list = "";
+        for (int i = 0; i < murais.size(); i++) {
+            list += murais.get(i) + "\n";
+        }
+        return list;
+    }
+
+    public void adicionarMural(String mural) {
+        murais.add(mural);
+    
+    }
+
+    public boolean limparMural() {
+        if (murais.size() == 0) {
+            return false;
+        } else {
+            murais.clear();
+            return true;
+        }
+    }
+    
     public String decodificar(int indice, String palavraChave) {/////
         if (recados.size() == 0) {
             return "Você não possui recados.";
@@ -118,8 +143,7 @@ public class Usuario {
         } else if (!(recados.get(indice) instanceof MensagemSecreta)) {
             return "A mensagem selecionada não é uma mensagem secreta.";
         } else {
-            String recado = ((MensagemSecreta) recados.get(indice)).verificarAcesso(palavraChave);
-            return recado;
+            return ((MensagemSecreta) recados.get(indice)).verificarAcesso(palavraChave);
         }
     }
 
