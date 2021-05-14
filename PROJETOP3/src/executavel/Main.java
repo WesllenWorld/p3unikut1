@@ -1,10 +1,3 @@
-/*
-    Componentes do grupo:
-    Diogo dos Santos Ávila
-    Flávio Antônio Medeiros de Farias
-    Ryan Pereira Lima da Silva
-    Wesllen Leonardo de Lira Santos
-*/
 package executavel;
 
 import usuarios.*;
@@ -13,16 +6,16 @@ import interacoesDeContas.Contas;
 import java.util.Scanner;
 
 public class Main {
-   
-    //Nota: O sinal "/////" refere-se a trechos que foram alterados (visível no vídeo da atividade)
+
+    // Nota: O sinal "/////" refere-se a trechos que foram alterados (visível no
+    // vídeo da atividade)
     public static void main(String[] args) {
         Usuario us, usEmissor, usReceptor;
         Contas social = new Contas();
         Scanner in = new Scanner(System.in);
-        String nome, login, senha, logado, exibirListas, recado, palavraChave, codigoDeAdmin, codigoCorreto = "Un1ku7@dm1n";
+        String nome, login, senha, logado, exibirListas, recado, palavraChave, codigoDeAdmin, codigoCorreto = "Un1ku7@dm1n", mural, exibirMural;
         int op, acaoDeConta, indiceMensagem;
         boolean EstadoDeLogado, recadoEnviado, cadastroEfetivado, administrador;
-
 
         do {
             menuInicial();
@@ -33,14 +26,15 @@ public class Main {
                 op = in.nextInt();
             }
             switch (op) {
-                case 1: //criação de conta
+                case 1: // criação de conta
                     in.nextLine();
                     System.out.println("Insira os seguintes dados para criar sua conta:");
                     System.out.println("Nome de login:");
                     login = in.next();
                     System.out.println("Senha do usuário:");
                     senha = in.next();
-                    System.out.println("Nome de usuário (opcional. Seu nome será visto como " + "\"" + "convidado" + "\"" + " caso não preencha o espaço.");
+                    System.out.println("Nome de usuário (opcional. Seu nome será visto como " + "\"" + "convidado"
+                            + "\"" + " caso não preencha o espaço.");
                     in.nextLine();
                     nome = in.nextLine();
                     if (nome.equals("")) {
@@ -51,11 +45,12 @@ public class Main {
                     if (cadastroEfetivado) {
                         System.out.println("Cadastro concluído com sucesso.");
                     } else {
-                        System.out.println("Não foi possível efetivar seu cadastro pois o nome de usuário já está em uso.");
+                        System.out.println(
+                                "Não foi possível efetivar seu cadastro pois o nome de usuário já está em uso.");
                     }
                     break;
 
-                case 2: //login + interações do usuário
+                case 2: // login + interações do usuário
                     in.nextLine();
                     System.out.println("Nome de login: ");
                     login = in.next();
@@ -71,8 +66,8 @@ public class Main {
                         if (!administrador) {
                             do {
                                 menuDeConta();
-                                acaoDeConta = in.nextInt();//O que a conta pode fazer
-                                while (acaoDeConta < 0 || acaoDeConta > 3) {
+                                acaoDeConta = in.nextInt();// O que a conta pode fazer
+                                while (acaoDeConta < 0 || acaoDeConta > 4) {
                                     System.out.println("Opção inválida. Tente:");
                                     menuDeConta();
                                     acaoDeConta = in.nextInt();
@@ -84,7 +79,7 @@ public class Main {
                                         menuEditar();
                                         op = in.nextInt();
                                         switch (op) {
-                                            case 1://Editar nome
+                                            case 1:// Editar nome
                                                 in.nextLine();
                                                 System.out.println("Digite o novo nome: ");
                                                 nome = in.nextLine();
@@ -92,7 +87,7 @@ public class Main {
                                                 social.editarCadastro(us);
                                                 System.out.println("Seu cadastro foi atualizado.");
                                                 break;
-                                            case 2://Editar senha
+                                            case 2:// Editar senha
                                                 in.nextLine();
                                                 System.out.println("Digite a nova senha: ");
                                                 senha = in.next();
@@ -100,7 +95,7 @@ public class Main {
                                                 social.editarCadastro(us);
                                                 System.out.println("Seu cadastro foi atualizado.");
                                                 break;
-                                            case 3://Editar nome e senha
+                                            case 3:// Editar nome e senha
                                                 in.nextLine();
                                                 System.out.println("Digite o novo nome: ");
                                                 nome = in.nextLine();
@@ -113,7 +108,7 @@ public class Main {
                                         }
                                         break;
 
-                                    case 2://Aba de amigos
+                                    case 2:// Aba de amigos
                                         menuAmigos();
                                         op = in.nextInt();
                                         while (op < 0 || op > 2) {
@@ -122,7 +117,7 @@ public class Main {
                                             op = in.nextInt();
                                         }
                                         switch (op) {
-                                            case 1://Adicionar amigo
+                                            case 1:// Adicionar amigo
                                                 in.nextLine();
                                                 System.out.println("Informe o login do usuário a ser adicionado:");
                                                 login = in.next();
@@ -130,18 +125,21 @@ public class Main {
                                                 usEmissor = new Usuario(logado, "", "");
                                                 int statusDoPedido = social.adicionarAmigo(usReceptor, usEmissor);
                                                 if (statusDoPedido == 0) {
-                                                    System.out.println("Pedido de amizade enviado. Aguardando aceitação.");
+                                                    System.out.println(
+                                                            "Pedido de amizade enviado. Aguardando aceitação.");
                                                 } else if (statusDoPedido == 1) {
-                                                    System.out.println("Pedido de amizade aceito! Vocês agora são amigos.");
+                                                    System.out.println(
+                                                            "Pedido de amizade aceito! Vocês agora são amigos.");
                                                 } else {
-                                                    System.out.println("Não foi possível enviar um pedido de amizade para o usuário solicitado. Verifique se o login está correto e tente novamente.");
+                                                    System.out.println(
+                                                            "Não foi possível enviar um pedido de amizade para o usuário solicitado. Verifique se o login está correto e tente novamente.");
                                                 }
 
                                                 break;
                                             case 2:
                                                 System.out.println("1 - Listar amigos");
                                                 System.out.println("2 - Pedidos pendentes");
-                                                System.out.println("0 - Sair");//Listar amigos e pedidos de amizade
+                                                System.out.println("0 - Sair");// Listar amigos e pedidos de amizade
                                                 op = in.nextInt();
                                                 while (op < 0 || op > 2) {
                                                     System.out.println("Opção inválida. Tente:");
@@ -150,18 +148,19 @@ public class Main {
                                                 }
 
                                                 switch (op) {
-                                                    case 0://Sair
+                                                    case 0:// Sair
                                                         break;
-                                                    case 1://Exibir lista de amigos
+                                                    case 1:// Exibir lista de amigos
                                                         usEmissor = new Usuario(logado, "", "");
                                                         exibirListas = social.exibirAmigos(usEmissor, op);
                                                         System.out.println("Lista de amigos:");
                                                         System.out.println(exibirListas);
                                                         break;
-                                                    case 2: //Exibir pendentes
+                                                    case 2: // Exibir pendentes
                                                         usEmissor = new Usuario(logado, "", "");
                                                         exibirListas = social.exibirAmigos(usEmissor, op);
-                                                        System.out.println("Envie convites para remover a pendência e que vocês sejam amigos!");
+                                                        System.out.println(
+                                                                "Envie convites para remover a pendência e que vocês sejam amigos!");
                                                         System.out.println("Há convites de amizade pendentes de:");
                                                         System.out.println(exibirListas);
                                                         break;
@@ -170,7 +169,7 @@ public class Main {
                                         }
                                         break;
 
-                                    case 3://Recados
+                                    case 3:// Recados
                                         menuRecados();
                                         op = in.nextInt();
                                         while (op < 0 || op > 4) {
@@ -179,23 +178,24 @@ public class Main {
                                             op = in.nextInt();
                                         }
                                         switch (op) {
-                                            case 0://Sair
+                                            case 0:// Sair
                                                 break;
-                                            case 1://Exibir recados
+                                            case 1:// Exibir recados
                                                 usEmissor = new Usuario(logado, "", "");
                                                 exibirListas = social.exibirRecados(usEmissor);
-                                                System.out.println("Mensagens recentes serão sempre as que estão mais em baixo.");
+                                                System.out.println(
+                                                        "Mensagens recentes serão sempre as que estão mais em baixo.");
                                                 System.out.println("Recados:");
                                                 System.out.println(exibirListas);
                                                 break;
-                                            case 2: //Enviar recado /////
+                                            case 2: // Enviar recado /////
                                                 in.nextLine();
                                                 System.out.println("Insira aqui o login do destinatário: ");
                                                 login = in.next();
                                                 System.out.println("Escreva seu recado: ");
                                                 in.nextLine();
                                                 recado = in.nextLine();
-                                                System.out.println("O recado será enviado como:");/////{
+                                                System.out.println("O recado será enviado como:");///// {
                                                 System.out.println("1 - Mensagem comum");
                                                 System.out.println("2 - Mensagem secreta");
                                                 op = in.nextInt();
@@ -204,29 +204,34 @@ public class Main {
                                                     System.out.println("1 - Mensagem comum");
                                                     System.out.println("2 - Mensagem secreta");
                                                     op = in.nextInt();
-                                                }/////}
+                                                } ///// }
                                                 usEmissor = new Usuario(logado, "", "");
                                                 usReceptor = new Usuario(login, "", "");
-                                                if (op == 1) {/////{
-                                                    recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado, "");
+                                                if (op == 1) {///// {
+                                                    recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado,
+                                                            "");
                                                 } else {
                                                     System.out.println("Digite a palavra-chave para a mensagem:");
                                                     palavraChave = in.next();
-                                                    recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado, palavraChave);
-                                                }/////}
+                                                    recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado,
+                                                            palavraChave);
+                                                } ///// }
                                                 if (recadoEnviado) {
-                                                    System.out.println("Mensagem enviada. Envie mais mensagens ou aguarde uma resposta!");
+                                                    System.out.println(
+                                                            "Mensagem enviada. Envie mais mensagens ou aguarde uma resposta!");
                                                 } else {
-                                                    System.out.println("Não foi possível enviar o recado. Verifique os dados de entrada e tente novamente.");
+                                                    System.out.println(
+                                                            "Não foi possível enviar o recado. Verifique os dados de entrada e tente novamente.");
                                                 }
                                                 break;
-                                            case 3://Limpar caixa de recados
+                                            case 3:// Limpar caixa de recados
                                                 usEmissor = new Usuario(logado, "", "");
                                                 boolean limparRecados = social.excluirRecados(usEmissor);
                                                 if (limparRecados) {
                                                     System.out.println("Seus recados foram excluídos com sucesso.");
                                                 } else {
-                                                    System.out.println("Você não possui nenhum recado para ser excluído.");
+                                                    System.out.println(
+                                                            "Você não possui nenhum recado para ser excluído.");
                                                 }
                                                 break;
                                             case 4: /////
@@ -241,22 +246,72 @@ public class Main {
                                                 System.out.println("Digite a palavra-chave da mensagem: ");
                                                 in.nextLine();
                                                 palavraChave = in.nextLine();
-                                                String result = social.decodificarRecado(usEmissor, indiceMensagem, palavraChave);
+                                                String result = social.decodificarRecado(usEmissor, indiceMensagem,
+                                                        palavraChave);
                                                 System.out.println(result + "\n");
 
                                                 break;
                                         }
                                         break;
-                                }
 
+                                    case 4: // Murais
+                                        menuMural();
+                                        op = in.nextInt();
+                                        while (op < 0 || op > 3) {
+                                            System.out.println("Opção inválida. Tente:");
+                                            menuMural();
+                                            op = in.nextInt();
+                                        }
+                                        switch (op) {
+                                            case 0:// Sair
+
+                                                break;
+                                            case 1:// Exibir Murais
+                                                System.out.println(
+                                                        "Insira aqui o login de quem voce deseja ver o Recado: ");
+                                                login = in.next();
+                                                usEmissor = new Usuario(login, "", "");
+                                                exibirMural = social.exibirMural(usEmissor);
+                                                System.out.println("Mural:");
+                                                System.out.println(exibirMural);
+
+                                                break;
+                                            case 2: // Criar Mural
+                                                System.out.println("Escreva sua mensagem para o mundo: ");
+                                                in.nextLine();
+                                                mural = in.nextLine();
+                                                usEmissor = new Usuario(logado, "", "");
+                                                boolean muralCriado = social.enviarMural(usEmissor, mural);
+                                                if (muralCriado) {
+                                                    System.out.println("Mural Criado!");
+                                                } else {
+                                                    System.out.println(
+                                                            "Não foi possível criar o mural. Verifique os dados de entrada e tente novamente.");
+                                                }
+
+                                                break;
+                                            case 3:// excluir mural
+                                                usEmissor = new Usuario(logado, "", "");
+                                                boolean excluirMural = social.excluirMural(usEmissor);
+                                                if (excluirMural) {
+                                                    System.out.println("Seu Mural foi excluido com sucesso.");
+                                                } else {
+                                                    System.out
+                                                            .println("Você não possui nenhum mural para ser excluído.");
+                                                }
+                                                break;
+                                        }
+
+                                        break;
+                                }
 
                             } while (acaoDeConta != 0);
                         } else {
                             UsuarioAdmin adminLogado = new UsuarioAdmin(logado, null, null);
                             do {
                                 menuDeAdmin();
-                                acaoDeConta = in.nextInt();//O que a conta pode fazer
-                                while (acaoDeConta < 0 || acaoDeConta > 4) {
+                                acaoDeConta = in.nextInt();// O que a conta pode fazer
+                                while (acaoDeConta < 0 || acaoDeConta > 5) {
                                     System.out.println("Opção inválida. Tente:");
                                     menuDeAdmin();
                                     acaoDeConta = in.nextInt();
@@ -268,7 +323,7 @@ public class Main {
                                         menuEditar();
                                         op = in.nextInt();
                                         switch (op) {
-                                            case 1://Editar nome
+                                            case 1:// Editar nome
                                                 in.nextLine();
                                                 System.out.println("Digite o novo nome: ");
                                                 nome = in.nextLine();
@@ -276,7 +331,7 @@ public class Main {
                                                 social.editarCadastro(us);
                                                 System.out.println("Seu cadastro foi atualizado.");
                                                 break;
-                                            case 2://Editar senha
+                                            case 2:// Editar senha
                                                 in.nextLine();
                                                 System.out.println("Digite a nova senha: ");
                                                 senha = in.next();
@@ -284,7 +339,7 @@ public class Main {
                                                 social.editarCadastro(us);
                                                 System.out.println("Seu cadastro foi atualizado.");
                                                 break;
-                                            case 3://Editar nome e senha
+                                            case 3:// Editar nome e senha
                                                 in.nextLine();
                                                 System.out.println("Digite o novo nome: ");
                                                 nome = in.nextLine();
@@ -297,7 +352,7 @@ public class Main {
                                         }
                                         break;
 
-                                    case 2://Aba de amigos
+                                    case 2:// Aba de amigos
                                         menuAmigos();
                                         op = in.nextInt();
                                         while (op < 0 || op > 2) {
@@ -306,7 +361,7 @@ public class Main {
                                             op = in.nextInt();
                                         }
                                         switch (op) {
-                                            case 1://Adicionar amigo
+                                            case 1:// Adicionar amigo
                                                 in.nextLine();
                                                 System.out.println("Informe o login do usuário a ser adicionado:");
                                                 login = in.next();
@@ -314,18 +369,21 @@ public class Main {
                                                 usEmissor = new Usuario(logado, "", "");
                                                 int statusDoPedido = social.adicionarAmigo(usReceptor, usEmissor);
                                                 if (statusDoPedido == 0) {
-                                                    System.out.println("Pedido de amizade enviado. Aguardando aceitação.");
+                                                    System.out.println(
+                                                            "Pedido de amizade enviado. Aguardando aceitação.");
                                                 } else if (statusDoPedido == 1) {
-                                                    System.out.println("Pedido de amizade aceito! Vocês agora são amigos.");
+                                                    System.out.println(
+                                                            "Pedido de amizade aceito! Vocês agora são amigos.");
                                                 } else {
-                                                    System.out.println("Não foi possível enviar um pedido de amizade para o usuário solicitado. Verifique se o login está correto e tente novamente.");
+                                                    System.out.println(
+                                                            "Não foi possível enviar um pedido de amizade para o usuário solicitado. Verifique se o login está correto e tente novamente.");
                                                 }
 
                                                 break;
                                             case 2:
                                                 System.out.println("1 - Listar amigos");
                                                 System.out.println("2 - Pedidos pendentes");
-                                                System.out.println("0 - Sair");//Listar amigos e pedidos de amizade
+                                                System.out.println("0 - Sair");// Listar amigos e pedidos de amizade
                                                 op = in.nextInt();
                                                 while (op < 0 || op > 2) {
                                                     System.out.println("Opção inválida. Tente:");
@@ -334,18 +392,19 @@ public class Main {
                                                 }
 
                                                 switch (op) {
-                                                    case 0://Sair
+                                                    case 0:// Sair
                                                         break;
-                                                    case 1://Exibir lista de amigos
+                                                    case 1:// Exibir lista de amigos
                                                         usEmissor = new Usuario(logado, "", "");
                                                         exibirListas = social.exibirAmigos(usEmissor, op);
                                                         System.out.println("Lista de amigos:");
                                                         System.out.println(exibirListas);
                                                         break;
-                                                    case 2: //Exibir pendentes
+                                                    case 2: // Exibir pendentes
                                                         usEmissor = new Usuario(logado, "", "");
                                                         exibirListas = social.exibirAmigos(usEmissor, op);
-                                                        System.out.println("Envie convites para remover a pendência e que vocês sejam amigos!");
+                                                        System.out.println(
+                                                                "Envie convites para remover a pendência e que vocês sejam amigos!");
                                                         System.out.println("Há convites de amizade pendentes de:");
                                                         System.out.println(exibirListas);
                                                         break;
@@ -354,7 +413,7 @@ public class Main {
                                         }
                                         break;
 
-                                    case 3://Recados
+                                    case 3:// Recados
                                         menuRecados();
                                         op = in.nextInt();
                                         while (op < 0 || op > 4) {
@@ -363,23 +422,24 @@ public class Main {
                                             op = in.nextInt();
                                         }
                                         switch (op) {
-                                            case 0://Sair
+                                            case 0:// Sair
                                                 break;
-                                            case 1://Exibir recados
+                                            case 1:// Exibir recados
                                                 usEmissor = new Usuario(logado, "", "");
                                                 exibirListas = social.exibirRecados(usEmissor);
-                                                System.out.println("Mensagens recentes serão sempre as que estão mais em baixo.");
+                                                System.out.println(
+                                                        "Mensagens recentes serão sempre as que estão mais em baixo.");
                                                 System.out.println("Recados:");
                                                 System.out.println(exibirListas);
                                                 break;
-                                            case 2: //Enviar recado /////
+                                            case 2: // Enviar recado /////
                                                 in.nextLine();
                                                 System.out.println("Insira aqui o login do destinatário: ");
                                                 login = in.next();
                                                 System.out.println("Escreva seu recado: ");
                                                 in.nextLine();
                                                 recado = in.nextLine();
-                                                System.out.println("O recado será enviado como:");/////{
+                                                System.out.println("O recado será enviado como:");///// {
                                                 System.out.println("1 - Mensagem comum");
                                                 System.out.println("2 - Mensagem secreta");
                                                 op = in.nextInt();
@@ -388,29 +448,34 @@ public class Main {
                                                     System.out.println("1 - Mensagem comum");
                                                     System.out.println("2 - Mensagem secreta");
                                                     op = in.nextInt();
-                                                }/////}
+                                                } ///// }
                                                 usEmissor = new Usuario(logado, "", "");
                                                 usReceptor = new Usuario(login, "", "");
-                                                if (op == 1) {/////{
-                                                    recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado, "");
+                                                if (op == 1) {///// {
+                                                    recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado,
+                                                            "");
                                                 } else {
                                                     System.out.println("Digite a palavra-chave para a mensagem:");
                                                     palavraChave = in.next();
-                                                    recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado, palavraChave);
-                                                }/////}
+                                                    recadoEnviado = social.enviarRecado(usEmissor, usReceptor, recado,
+                                                            palavraChave);
+                                                } ///// }
                                                 if (recadoEnviado) {
-                                                    System.out.println("Mensagem enviada. Envie mais mensagens ou aguarde uma resposta!");
+                                                    System.out.println(
+                                                            "Mensagem enviada. Envie mais mensagens ou aguarde uma resposta!");
                                                 } else {
-                                                    System.out.println("Não foi possível enviar o recado. Verifique os dados de entrada e tente novamente.");
+                                                    System.out.println(
+                                                            "Não foi possível enviar o recado. Verifique os dados de entrada e tente novamente.");
                                                 }
                                                 break;
-                                            case 3://Limpar caixa de recados
+                                            case 3:// Limpar caixa de recados
                                                 usEmissor = new Usuario(logado, "", "");
                                                 boolean limparRecados = social.excluirRecados(usEmissor);
                                                 if (limparRecados) {
                                                     System.out.println("Seus recados foram excluídos com sucesso.");
                                                 } else {
-                                                    System.out.println("Você não possui nenhum recado para ser excluído.");
+                                                    System.out.println(
+                                                            "Você não possui nenhum recado para ser excluído.");
                                                 }
                                                 break;
                                             case 4: /////
@@ -425,14 +490,64 @@ public class Main {
                                                 System.out.println("Digite a palavra-chave da mensagem: ");
                                                 in.nextLine();
                                                 palavraChave = in.nextLine();
-                                                String result = social.decodificarRecado(usEmissor, indiceMensagem, palavraChave);
+                                                String result = social.decodificarRecado(usEmissor, indiceMensagem,
+                                                        palavraChave);
                                                 System.out.println(result + "\n");
 
                                                 break;
                                         }
                                         break;
-
                                     case 4:
+                                        menuMural();
+                                        op = in.nextInt();
+                                        while (op < 0 || op > 3) {
+                                            System.out.println("Opção inválida. Tente:");
+                                            menuMural();
+                                            op = in.nextInt();
+                                        }
+                                        switch (op) {
+                                            case 0:// Sair
+
+                                                break;
+                                            case 1:// Exibir Murais
+                                                System.out.println(
+                                                        "Insira aqui o login de quem voce deseja ver o Recado: ");
+                                                login = in.next();
+                                                usEmissor = new Usuario(login, "", "");
+                                                exibirMural = social.exibirMural(usEmissor);
+                                                System.out.println("Mural:");
+                                                System.out.println(exibirMural);
+
+                                                break;
+                                            case 2: // Criar Mural
+                                                System.out.println("Escreva sua mensagem para o mundo: ");
+                                                in.nextLine();
+                                                mural = in.nextLine();
+                                                usEmissor = new Usuario(logado, "", "");
+                                                boolean muralCriado = social.enviarMural(usEmissor, mural);
+                                                if (muralCriado) {
+                                                    System.out.println("Mural Criado!");
+                                                } else {
+                                                    System.out.println(
+                                                            "Não foi possível criar o mural. Verifique os dados de entrada e tente novamente.");
+                                                }
+
+                                                break;
+                                            case 3:// excluir mural
+                                                usEmissor = new Usuario(logado, "", "");
+                                                boolean excluirMural = social.excluirMural(usEmissor);
+                                                if (excluirMural) {
+                                                    System.out.println("Seu Mural foi excluido com sucesso.");
+                                                } else {
+                                                    System.out
+                                                            .println("Você não possui nenhum mural para ser excluído.");
+                                                }
+                                                break;
+                                        }
+
+                                        break;
+
+                                    case 5: // Login de ADM
                                         menuAdministrador();
                                         op = in.nextInt();
                                         while (op < 0 || op > 2) {
@@ -452,19 +567,19 @@ public class Main {
                                                     menuEditar();
                                                     op = in.nextInt();
                                                     switch (op) {
-                                                        case 1://Editar nome
+                                                        case 1:// Editar nome
                                                             in.nextLine();
                                                             System.out.println("Digite o novo nome: ");
                                                             nome = in.nextLine();
                                                             us = new Usuario(login, null, nome);
                                                             break;
-                                                        case 2://Editar senha
+                                                        case 2:// Editar senha
                                                             in.nextLine();
                                                             System.out.println("Digite a nova senha: ");
                                                             senha = in.next();
                                                             us = new Usuario(login, senha, null);
                                                             break;
-                                                        case 3://Editar nome e senha
+                                                        case 3:// Editar nome e senha
                                                             in.nextLine();
                                                             System.out.println("Digite o novo nome: ");
                                                             nome = in.nextLine();
@@ -500,14 +615,15 @@ public class Main {
                     }
                     break;
 
-                case 3:
+                case 3: // Criação de conta ADM
                     in.nextLine();
                     System.out.println("Insira os seguintes dados para criar sua conta de administrador:");
                     System.out.println("Nome de login:");
                     login = in.next();
                     System.out.println("Senha do usuário:");
                     senha = in.next();
-                    System.out.println("Nome de usuário (opcional. Seu nome será visto como " + "\"" + "convidado" + "\"" + " caso não preencha o espaço.");
+                    System.out.println("Nome de usuário (opcional. Seu nome será visto como " + "\"" + "convidado"
+                            + "\"" + " caso não preencha o espaço.");
                     in.nextLine();
                     nome = in.nextLine();
                     if (nome.equals("")) {
@@ -523,7 +639,8 @@ public class Main {
                         if (cadastroEfetivado) {
                             System.out.println("Cadastro concluído com sucesso.");
                         } else {
-                            System.out.println("Não foi possível efetivar seu cadastro pois o nome de usuário já está em uso.");
+                            System.out.println(
+                                    "Não foi possível efetivar seu cadastro pois o nome de usuário já está em uso.");
                         }
                         break;
                     }
@@ -535,7 +652,7 @@ public class Main {
 
     }
 
-    public static void menuInicial() {//Menu inicial
+    public static void menuInicial() {// Menu inicial
         System.out.println("BEM-VINDO AO UNIKUT, A MAIS NOVA FORMA DE MANTER A UNICAP MAIS PERTINHO DE VOCÊ.");
 
         System.out.println("Tecle - 1 – Para fazer parte da comunidade do UNIKUT.");
@@ -544,20 +661,22 @@ public class Main {
         System.out.println("Tecle 0 – para sair do programa.");
     }
 
-    public static void menuDeConta() {//Menu do usuário logado
+    public static void menuDeConta() {// Menu do usuário logado
         System.out.println("Funções disponíveis:");
         System.out.println("1 – Editar perfil");
         System.out.println("2 – Amigos");
         System.out.println("3 - Recados");
+        System.out.println("4 - Murais");
         System.out.println("0 - Desconectar");
     }
 
-    public static void menuDeAdmin() {//Menu do usuário logado
+    public static void menuDeAdmin() {// Menu do usuário logado
         System.out.println("Funções disponíveis:");
         System.out.println("1 – Editar perfil");
         System.out.println("2 – Amigos");
         System.out.println("3 - Recados");
-        System.out.println("4 - Administrador");
+        System.out.println("4 - Murais");
+        System.out.println("5 - Administrador");
         System.out.println("0 - Desconectar");
     }
 
@@ -589,5 +708,13 @@ public class Main {
         System.out.println("1 - Apenas o Nome;");
         System.out.println("2 - Apenas a senha;");
         System.out.println("3 - Nome e senha.");
+    }
+
+    public static void menuMural() {
+        System.out.println("Menu de Murais:");
+        System.out.println("1 - Ver Murais");
+        System.out.println("2 - Criar Mural");
+        System.out.println("3 - Excluir Seu Mural");
+        System.out.println("0 - Voltar");
     }
 }
