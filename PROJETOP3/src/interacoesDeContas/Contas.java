@@ -1,5 +1,9 @@
 package interacoesDeContas;
+
+import mensagens.Mensagem;
+import mensagens.MensagemSecreta;
 import usuarios.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,16 @@ public class Contas {
             }
         }
         return false;
+    }
+
+    public boolean tipoUsuario(Usuario u) {
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getLogin().equals(u.getLogin())) {
+                u = usuarios.get(i);
+            }
+        }
+        return u.isAdm();
     }
 
     public void editarCadastro(Usuario u) {//Edição de perfil
@@ -106,20 +120,31 @@ public class Contas {
         return info;
     }
 
-    public boolean enviarRecado(Usuario usEmissor, Usuario usReceptor, String mensagem) {
-        String recado = usEmissor.getLogin() + ":" + mensagem;
+    public boolean enviarRecado(Usuario usEmissor, Usuario usReceptor, String mensagem, String palavraChave) {/////PARAMETRO A MAIS
         if (usEmissor.equals(usReceptor) == true) {//Se ambos são iguais
             return false;
         } else if (usuarios.contains(usReceptor) == false) {//Se o receptor está na lista
             return false;
         } else {
-            for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
-                if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
-                    usReceptor = usuarios.get(i);
-                    break;
+            if (palavraChave.equals("")) {/////
+                Mensagem recado = new Mensagem(usEmissor.getLogin(), mensagem);
+                for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
+                    if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
+                        usReceptor = usuarios.get(i);
+                        break;
+                    }
                 }
+                usReceptor.adicionarRecado(recado);
+            } else {/////
+                Mensagem recado = new MensagemSecreta(usEmissor.getLogin(), mensagem, palavraChave);/////
+                for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do receptor
+                    if (usuarios.get(i).getLogin().equals(usReceptor.getLogin())) {
+                        usReceptor = usuarios.get(i);
+                        break;
+                    }
+                }
+                usReceptor.adicionarRecado(recado);
             }
-            usReceptor.adicionarRecado(recado);
         }
         return true;
     }
@@ -134,5 +159,35 @@ public class Contas {
         return u.limparRecados();
     }
 
+    public String decodificarRecado(Usuario usEmissor, int indice, String palavraChave) {/////
+        for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do usuário
+            if (usuarios.get(i).getLogin().equals(usEmissor.getLogin())) {
+                usEmissor = usuarios.get(i);
+                break;
+            }
+        }
+
+        String mensagemDeRetorno = usEmissor.decodificar(indice, palavraChave);
+        return mensagemDeRetorno;
+    }
+
+    public void removerLogin(Usuario u) {
+        usuarios.remove(u);
+    }
+
+    public Usuario buscar(Usuario u) {/////ATUALIZAR O RESTO DO CÓDIGO
+
+        for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do usuário
+            if (usuarios.get(i).getLogin().equals(u.getLogin())) {
+                if (usuarios.get(i).isAdm()) {
+                    return null; //jogar a exceção de ser adm;
+                } else {
+                    return usuarios.get(i);
+                }
+            }
+        }
+
+        return null;
+    }
 
 }
