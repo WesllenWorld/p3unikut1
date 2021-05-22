@@ -246,4 +246,12 @@ public class PrincipalController {
         }
     }
 
+    public String exibirMeusMatches(String logado) {
+        Usuario u = new Usuario(logado, "","");
+        String info;
+        u = busca(u);
+        info = u.listaDeMeusMatches();
+        return info;
+    }
+
 }

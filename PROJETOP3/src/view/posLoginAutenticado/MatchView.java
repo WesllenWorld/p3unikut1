@@ -18,14 +18,14 @@ public class MatchView {
         switch (op) {
             case 0:
                 break;
-            case 1:
+            case 1://matches mútuos
                 exibirListas = controllerPrincipal.exibirMatches(logado);
                 System.out.println("Lista de matches:");
                 System.out.println(exibirListas);
                 break;
 
             case 2:
-                in.nextLine();
+                in.nextLine();//adicionar
                 System.out.println("Informe o login do usuário a ser solicitado o match:");
                 login = in.next();
                 try{
@@ -38,6 +38,12 @@ public class MatchView {
                 }catch(AutoRequisicaoException | LoginInvalidoException | JaPossuemMatchException | MatchJaFeitoException e){
                     System.out.println(e.getMessage());
                 }
+                break;
+
+            case 3://matches não-mútuos
+                exibirListas = controllerPrincipal.exibirMeusMatches(logado);
+                System.out.println("Meus matches: ");
+                System.out.println(exibirListas);
                 break;
         }
     }

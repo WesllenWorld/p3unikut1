@@ -68,7 +68,7 @@ public class UsuarioView extends MenuView {
                 case 5:
                     menuMatches();
                     op = in.nextInt();
-                    while (op < 0 || op > 2) {
+                    while (op < 0 || op > 3) {
                         System.out.println("Opção inválida. Tente:");
                         menuMatches();
                         op = in.nextInt();
@@ -114,6 +114,7 @@ public class UsuarioView extends MenuView {
         System.out.println("Menu de Matches:");
         System.out.println("1 - Ver Matches");
         System.out.println("2 - Adicionar um Match");
+        System.out.println("3 - Meus Matches");
         System.out.println("0 - Voltar");
     }
 

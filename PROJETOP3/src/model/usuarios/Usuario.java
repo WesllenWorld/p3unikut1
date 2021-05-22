@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Usuario {
     private String login, senha, nomeDeUsuario;
-    private ArrayList<Usuario> amigos, pendentes, matches, matchesPendentes;
+    private ArrayList<Usuario> amigos, pendentes, matches, meusMatches;
     private ArrayList<Mensagem> recados;
     private ArrayList<String> murais;
 
@@ -25,7 +25,7 @@ public class Usuario {
         recados = new ArrayList();
         murais = new ArrayList();
         matches = new ArrayList();
-        matchesPendentes = new ArrayList<>();
+        meusMatches = new ArrayList<>();
         adm = false;
     }
 
@@ -174,20 +174,29 @@ public class Usuario {
     }
 
     public boolean adicionarMatch(Usuario u) throws MatchJaFeitoException, JaPossuemMatchException{
-        if (this.contem(matchesPendentes, u)) {//Se já existe um match pendente de "u"
-            this.matches.add(u);
-            u.matches.add(this);
-            matchesPendentes.remove(u);
-            u.matchesPendentes.remove(this);
-            return false;
-        } else if (u.contem(matchesPendentes,this)) {//Se "u" possui um match pendente do usuário
+        if (this.contem(meusMatches, u)) {//Se "u" possui um match pendente do usuário
             throw new MatchJaFeitoException("Solicitação de match já feita anteriormente.");
-        } else if (u.contem(matches,this) && this.contem(matches, u)) {//Se ambos ja tinham match
+        } else if (this.contem(matches,u)) {//Se ambos ja tinham match
             throw new JaPossuemMatchException("Match já existente anteriormente.");
         } else {
-            u.matchesPendentes.add(this);
+            meusMatches.add(u);
+            if (this.contem(meusMatches, u) && u.contem(u.meusMatches, this)) {//Se já existe um match pendente de "u"
+                this.matches.add(u);
+                u.matches.add(this);
+                meusMatches.remove(u);
+                u.meusMatches.remove(this);
+                return false;
+            }
             return true;
         }
+    }
+
+    public String listaDeMeusMatches(){
+        String list = "";
+        for (Usuario u : meusMatches){
+            list += u.toString();
+        }
+        return list;
     }
 
     public boolean indiceValido(int i, int tamanho) {
