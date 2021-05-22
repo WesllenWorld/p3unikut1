@@ -123,6 +123,7 @@ public class UsuarioView extends MenuView {
         System.out.println("2 – Amigos");
         System.out.println("3 - Recados");
         System.out.println("4 - Murais");
+        System.out.println("5 - Match");
         System.out.println("0 - Desconectar");
     }
 }
