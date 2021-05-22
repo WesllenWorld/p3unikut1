@@ -24,6 +24,8 @@ public class Usuario {
         pendentes = new ArrayList();
         recados = new ArrayList();
         murais = new ArrayList();
+        matches = new ArrayList();
+        matchesPendentes = new ArrayList<>();
         adm = false;
     }
 

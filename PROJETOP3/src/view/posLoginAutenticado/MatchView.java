@@ -30,7 +30,7 @@ public class MatchView {
                 login = in.next();
                 try{
                     matchMutuo = controllerPrincipal.adicionarMatch(login, logado);
-                    if(!matchMutuo){
+                    if(matchMutuo){
                         System.out.println("Você deu um match, mas o outro ainda não deu um match em você.");
                     }else{
                         System.out.println("MATCH! Agora vocês dois tem um match.");

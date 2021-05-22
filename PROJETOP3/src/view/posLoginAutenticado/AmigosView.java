@@ -44,6 +44,7 @@ public class AmigosView {
                         break;
                     case 1:// Exibir lista de amigos
                         exibirLista = controllerPrincipal.exibirAmigos(logado);
+                        System.out.println("Lista de amigos: ");
                         System.out.println(exibirLista);
                         break;
                     case 2: // Exibir pendentes
