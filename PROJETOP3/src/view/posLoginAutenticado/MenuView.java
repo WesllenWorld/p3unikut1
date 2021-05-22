@@ -11,4 +11,6 @@ public abstract class MenuView {
     public abstract void menuMural();
 
     public abstract void menuEditar();
+
+    public abstract void menuMatches();
 }

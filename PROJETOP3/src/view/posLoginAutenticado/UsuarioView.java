@@ -13,11 +13,12 @@ public class UsuarioView extends MenuView {
         AmigosView viewAmigos = new AmigosView();
         RecadosView viewRecados = new RecadosView();
         MuraisView viewMurais = new MuraisView();
+        MatchView viewMatch = new MatchView();
 
         do {
             menu();
             acaoDeConta = in.nextInt();// O que a conta pode fazer
-            while (acaoDeConta < 0 || acaoDeConta > 4) {
+            while (acaoDeConta < 0 || acaoDeConta > 5) {
                 System.out.println("Opção inválida. Tente:");
                 menu();
                 acaoDeConta = in.nextInt();
@@ -63,6 +64,17 @@ public class UsuarioView extends MenuView {
                     }
                     viewMurais.murais(in, logado, op, controllerPrincipal);
                     break;
+
+                case 5:
+                    menuMatches();
+                    op = in.nextInt();
+                    while (op < 0 || op > 2) {
+                        System.out.println("Opção inválida. Tente:");
+                        menuMatches();
+                        op = in.nextInt();
+                    }
+                    viewMatch.match(op, logado, in, controllerPrincipal);
+                    break;
             }
         } while (acaoDeConta != 0);
     }
@@ -95,6 +107,13 @@ public class UsuarioView extends MenuView {
         System.out.println("1 - Ver Murais");
         System.out.println("2 - Criar Mural");
         System.out.println("3 - Excluir Seu Mural");
+        System.out.println("0 - Voltar");
+    }
+
+    public void menuMatches() {
+        System.out.println("Menu de Matches:");
+        System.out.println("1 - Ver Matches");
+        System.out.println("2 - Adicionar um Match");
         System.out.println("0 - Voltar");
     }
 

@@ -1,10 +1,7 @@
 package model.usuarios;
 
 import controller.exceptions.SenhaInvalidaException;
-import model.exceptions.JaSaoAmigosException;
-import model.exceptions.ListaVaziaException;
-import model.exceptions.MensagemNaoSecretaException;
-import model.exceptions.PedidoJaExistenteException;
+import model.exceptions.*;
 import model.mensagens.Mensagem;
 import model.mensagens.MensagemSecreta;
 
@@ -13,7 +10,7 @@ import java.util.List;
 
 public class Usuario {
     private String login, senha, nomeDeUsuario;
-    private ArrayList<Usuario> amigos, pendentes;
+    private ArrayList<Usuario> amigos, pendentes, matches, matchesPendentes;
     private ArrayList<Mensagem> recados;
     private ArrayList<String> murais;
 
@@ -60,8 +57,8 @@ public class Usuario {
 
     public boolean adicionar(Usuario u) throws JaSaoAmigosException, PedidoJaExistenteException {//Adicionar amigos
         if (this.contem(this.pendentes, u)) {//Se já existe um convite pendente de "u"
-            this.adicionarAmigo(u);
-            u.adicionarAmigo(this);
+            this.adicionarNaLista(u);
+            u.adicionarNaLista(this);
             this.removerPendente(u);
             u.removerPendente(this);
             return false;//corresponde à aceitação do pedido de amizade
@@ -75,7 +72,7 @@ public class Usuario {
         }
     }
 
-    public void adicionarAmigo(Usuario u) {
+    public void adicionarNaLista(Usuario u) {
         amigos.add(u);
     }
 
@@ -163,12 +160,35 @@ public class Usuario {
             } catch (SenhaInvalidaException e) {
                 throw e;
             }
+        }
+    }
 
+    public String listaDeMatches(){
+        String list = "";
+        for (Usuario u : matches){
+            list += u.toString();
+        }
+        return list;
+    }
+
+    public boolean adicionarMatch(Usuario u) throws MatchJaFeitoException, JaPossuemMatchException{
+        if (this.contem(matchesPendentes, u)) {//Se já existe um match pendente de "u"
+            this.matches.add(u);
+            u.matches.add(this);
+            matchesPendentes.remove(u);
+            u.matchesPendentes.remove(this);
+            return false;
+        } else if (u.contem(matchesPendentes,this)) {//Se "u" possui um match pendente do usuário
+            throw new MatchJaFeitoException("Solicitação de match já feita anteriormente.");
+        } else if (u.contem(matches,this) && this.contem(matches, u)) {//Se ambos ja tinham match
+            throw new JaPossuemMatchException("Match já existente anteriormente.");
+        } else {
+            u.matchesPendentes.add(this);
+            return true;
         }
     }
 
     public boolean indiceValido(int i, int tamanho) {
-
         return i >= 0 && i < tamanho + 1;
     }
 

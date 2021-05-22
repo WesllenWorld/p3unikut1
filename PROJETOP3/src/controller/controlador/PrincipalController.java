@@ -218,4 +218,32 @@ public class PrincipalController {
         }
     }
 
+    public String exibirMatches(String logado) {
+        Usuario u = new Usuario(logado, "","");
+        String info;
+        u = busca(u);
+        info = u.listaDeMatches();
+        return info;
+    }
+
+    public boolean adicionarMatch(String login, String logado) throws AutoRequisicaoException, LoginInvalidoException, JaPossuemMatchException, MatchJaFeitoException {
+        Usuario usReceptor = new Usuario(login, "","");
+        Usuario usEmissor = new Usuario(logado, "","");
+        if (usEmissor.equals(usReceptor)) {//Se ambos são iguais
+            throw new AutoRequisicaoException("Você não pode fazer um match com você mesmo.");
+        } else if (!contem(usReceptor)) {//Se o receptor nao está na lista
+            throw new LoginInvalidoException("Login não encontrado.");
+        } else {
+            try{
+                usReceptor = busca(usReceptor);
+                usEmissor = busca(usEmissor);
+                boolean statusMatch = usEmissor.adicionarMatch(usReceptor);
+                return statusMatch;
+            }catch(JaPossuemMatchException | MatchJaFeitoException e){
+                throw e;
+            }
+
+        }
+    }
+
 }
