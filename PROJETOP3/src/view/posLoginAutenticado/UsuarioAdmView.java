@@ -73,7 +73,7 @@ public class UsuarioAdmView extends MenuView{
                 case 5:
                     menuMatches();
                     op = in.nextInt();
-                    while (op < 0 || op > 2) {
+                    while (op < 0 || op > 3) {
                         System.out.println("Opção inválida. Tente:");
                         menuMatches();
                         op = in.nextInt();
