@@ -20,7 +20,6 @@ public class EditarPerfilView {
                 }
                 controller.editarCadastro(logado, senha, nome);
                 System.out.println("Seu cadastro foi atualizado.");
-
                 break;
             case 2:// Editar senha
                 nome = null;

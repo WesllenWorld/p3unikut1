@@ -9,17 +9,15 @@ import model.usuarios.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class PrincipalController {
-    public List<Usuario> usuarios;
+    private List<Usuario> usuarios;
 
     public PrincipalController() {
-        usuarios = new ArrayList<>();
+        usuarios = new ArrayList();
     }
 
     public Usuario busca(Usuario u) {
-        for (int i = 0; i < usuarios.size(); i++) {// Buscar a posição do usuário
+        for (int i = 0; i < usuarios.size(); i++) {//Buscar a posição do usuário
             if (usuarios.get(i).getLogin().equals(u.getLogin())) {
                 u = usuarios.get(i);
                 return u;
@@ -32,9 +30,7 @@ public class PrincipalController {
         return usuarios.contains(u);
     }
 
-    public void cadastro(String login, String senha, String nome) throws UsuarioExistenteException {// Método de
-                                                                                                    // inserção de um
-                                                                                                    // usuário
+    public void cadastro(String login, String senha, String nome) throws UsuarioExistenteException {//Método de inserção de um usuário
         Usuario u = new Usuario(login, senha, nome);
         if (!contem(u)) {
             u.adicionarConta(u, usuarios);
@@ -43,8 +39,7 @@ public class PrincipalController {
         }
     }
 
-    public void cadastro(String login, String senha, String nome, String codigo)
-            throws UsuarioExistenteException, CodigoAdmErradoException {// Método de inserção de um usuário
+    public void cadastro(String login, String senha, String nome, String codigo) throws UsuarioExistenteException, CodigoAdmErradoException {//Método de inserção de um usuário
         String codigoCorreto = "Un1ku7@dm1n";
         if (!codigo.equals(codigoCorreto)) {
             throw new CodigoAdmErradoException("Código de administrador incorreto.");
@@ -58,8 +53,7 @@ public class PrincipalController {
         }
     }
 
-    public void login(String login, String senha) throws LoginInvalidoException, SenhaInvalidaException { // Login do
-                                                                                                          // usuário
+    public void login(String login, String senha) throws LoginInvalidoException, SenhaInvalidaException { //Login do usuário
         Usuario u = new Usuario(login, "", "");
         u = busca(u);
         if (u == null) {
@@ -81,7 +75,7 @@ public class PrincipalController {
         }
     }
 
-    public void editarCadastro(String login, String senha, String nome) {// Edição de perfil
+    public void editarCadastro(String login, String senha, String nome) {//Edição de perfil
         Usuario u = new Usuario(login, "", "");
         u = busca(u);
         if (senha == null && nome != null) {
@@ -94,13 +88,12 @@ public class PrincipalController {
         }
     }
 
-    public boolean adicionarAmigo(String login, String logado)
-            throws AutoRequisicaoException, LoginInvalidoException, JaSaoAmigosException, PedidoJaExistenteException {
+    public boolean adicionarAmigo(String login, String logado) throws AutoRequisicaoException, LoginInvalidoException, JaSaoAmigosException, PedidoJaExistenteException {
         Usuario usReceptor = new Usuario(login, "", "");
         Usuario usEmissor = new Usuario(logado, "", "");
-        if (usEmissor.equals(usReceptor)) {// Se ambos são iguais
+        if (usEmissor.equals(usReceptor)) {//Se ambos são iguais
             throw new AutoRequisicaoException("Pedido enviado ao mesmo usuário.");
-        } else if (!contem(usReceptor)) {// Se o receptor não está na lista
+        } else if (!contem(usReceptor)) {//Se o receptor não está na lista
             throw new LoginInvalidoException("Login não encontrado.");
         } else {
             try {
@@ -113,7 +106,7 @@ public class PrincipalController {
         }
     }
 
-    public String exibirAmigos(String login) throws ListaVaziaException {
+    public String exibirAmigos(String login) {
         Usuario u = new Usuario(login, "", "");
         String info;
         u = busca(u);
@@ -121,7 +114,7 @@ public class PrincipalController {
         return info;
     }
 
-    public String exibirPendentes(String login) throws ListaVaziaException {
+    public String exibirPendentes(String login) {
         Usuario u = new Usuario(login, "", "");
         String info;
         u = busca(u);
@@ -129,21 +122,15 @@ public class PrincipalController {
         return info;
     }
 
-    public String exibirRecados(String logado) throws ListaVaziaException {
+    public String exibirRecados(String logado) {
         Usuario u = new Usuario(logado, "", "");
         String info;
-        try {
-            u = busca(u);
-            info = u.listaRecados();
-            return info;
-        } catch (ListaVaziaException e) {
-            throw e;
-        }
-
+        u = busca(u);
+        info = u.listaRecados();
+        return info;
     }
 
-    public void enviarRecado(String logado, String login, String recado)
-            throws AutoRequisicaoException, LoginInvalidoException {
+    public void enviarRecado(String logado, String login, String recado) throws AutoRequisicaoException, LoginInvalidoException {
         Usuario usEmissor = new Usuario(logado, "", "");
         Usuario usReceptor = new Usuario(login, "", "");
         if (usEmissor.equals(usReceptor)) {
@@ -157,8 +144,7 @@ public class PrincipalController {
         }
     }
 
-    public void enviarRecado(String logado, String login, String recado, String palavraChave)
-            throws AutoRequisicaoException, LoginInvalidoException {
+    public void enviarRecado(String logado, String login, String recado, String palavraChave) throws AutoRequisicaoException, LoginInvalidoException {
         Usuario usEmissor = new Usuario(logado, "", "");
         Usuario usReceptor = new Usuario(login, "", "");
         if (usEmissor.equals(usReceptor)) {
@@ -172,18 +158,13 @@ public class PrincipalController {
         }
     }
 
-    public void excluirRecados(String logado) throws ListaVaziaException {
+    public void excluirRecados(String logado) {
         Usuario u = new Usuario(logado, "", "");
         u = busca(u);
-        try {
-            u.limparRecados();
-        } catch (ListaVaziaException e) {
-            throw e;
-        }
+        u.limparRecados();
     }
 
-    public String decodificarRecado(String logado, int indice, String palavraChave)
-            throws SenhaInvalidaException, ListaVaziaException, MensagemNaoSecretaException {/////
+    public String decodificarRecado(String logado, int indice, String palavraChave) throws SenhaInvalidaException, ListaVaziaException, MensagemNaoSecretaException {/////
         Usuario u = new Usuario(logado, "", "");
         u = busca(u);
         try {
@@ -208,18 +189,14 @@ public class PrincipalController {
         }
     }
 
-    public String exibirMural(String login) throws LoginInvalidoException, ListaVaziaException {
+    public String exibirMural(String login) throws LoginInvalidoException {
         Usuario u = new Usuario(login, "", "");
         String info;
         u = busca(u);
         if (u == null) {
             throw new LoginInvalidoException("Login inválido.");
         } else {
-            try {
-                info = u.listaMurais();
-            } catch (ListaVaziaException e) {
-                throw e;
-            }
+            info = u.listaMurais();
             return info;
         }
     }
@@ -229,7 +206,6 @@ public class PrincipalController {
         u = busca(u);
         String recado = u.getLogin() + ":" + mensagem;
         u.adicionarMural(recado);
-
     }
 
     public void excluirMural(String logado) throws ListaVaziaException {
@@ -242,50 +218,40 @@ public class PrincipalController {
         }
     }
 
-    public String exibirMatches(String logado) throws ListaVaziaException {
-        Usuario u = new Usuario(logado, "", "");
+    public String exibirMatches(String logado) {
+        Usuario u = new Usuario(logado, "","");
         String info;
         u = busca(u);
-        try {
-            info = u.listaDeMatches();
-            return info;
-        } catch (ListaVaziaException e) {
-            throw e;
-        }
+        info = u.listaDeMatches();
+        return info;
     }
 
-    public boolean adicionarMatch(String login, String logado)
-            throws AutoRequisicaoException, LoginInvalidoException, JaPossuemMatchException, MatchJaFeitoException {
-        Usuario usReceptor = new Usuario(login, "", "");
-        Usuario usEmissor = new Usuario(logado, "", "");
-        if (usEmissor.equals(usReceptor)) {// Se ambos são iguais
+    public boolean adicionarMatch(String login, String logado) throws AutoRequisicaoException, LoginInvalidoException, JaPossuemMatchException, MatchJaFeitoException {
+        Usuario usReceptor = new Usuario(login, "","");
+        Usuario usEmissor = new Usuario(logado, "","");
+        if (usEmissor.equals(usReceptor)) {//Se ambos são iguais
             throw new AutoRequisicaoException("Você não pode fazer um match com você mesmo.");
-        } else if (!contem(usReceptor)) {// Se o receptor nao está na lista
+        } else if (!contem(usReceptor)) {//Se o receptor nao está na lista
             throw new LoginInvalidoException("Login não encontrado.");
         } else {
-            try {
+            try{
                 usReceptor = busca(usReceptor);
                 usEmissor = busca(usEmissor);
                 boolean statusMatch = usEmissor.adicionarMatch(usReceptor);
                 return statusMatch;
-            } catch (JaPossuemMatchException | MatchJaFeitoException e) {
+            }catch(JaPossuemMatchException | MatchJaFeitoException e){
                 throw e;
             }
 
         }
     }
 
-    public String exibirMeusMatches(String logado) throws ListaVaziaException {
-        Usuario u = new Usuario(logado, "", "");
+    public String exibirMeusMatches(String logado) {
+        Usuario u = new Usuario(logado, "","");
         String info;
-
         u = busca(u);
-        try {
-            info = u.listaDeMeusMatches();
-            return info;
-        } catch (ListaVaziaException e) {
-            throw e;
-        }
+        info = u.listaDeMeusMatches();
+        return info;
     }
 
 }

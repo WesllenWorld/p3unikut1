@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
-
     private String login, senha, nomeDeUsuario;
     private ArrayList<Usuario> amigos, pendentes, matches, meusMatches;
     private ArrayList<Mensagem> recados;
@@ -21,11 +20,11 @@ public class Usuario {
         this.login = login;
         this.senha = senha;
         this.nomeDeUsuario = nomeDeUsuario;
-        amigos = new ArrayList<>();
-        pendentes = new ArrayList<>();
-        recados = new ArrayList<>();
-        murais = new ArrayList<>();
-        matches = new ArrayList<>();
+        amigos = new ArrayList();
+        pendentes = new ArrayList();
+        recados = new ArrayList();
+        murais = new ArrayList();
+        matches = new ArrayList();
         meusMatches = new ArrayList<>();
         adm = false;
     }
@@ -58,21 +57,20 @@ public class Usuario {
         return (this.getSenha().equals(senha));
     }
 
-    public boolean adicionar(Usuario u) throws JaSaoAmigosException, PedidoJaExistenteException {// Adicionar amigos
-        if (this.contem(this.pendentes, u)) {// Se já existe um convite pendente de "u"
+    public boolean adicionar(Usuario u) throws JaSaoAmigosException, PedidoJaExistenteException {//Adicionar amigos
+        if (this.contem(this.pendentes, u)) {//Se já existe um convite pendente de "u"
             this.adicionarNaLista(u);
             u.adicionarNaLista(this);
             this.removerPendente(u);
             u.removerPendente(this);
-            return false;// corresponde à aceitação do pedido de amizade
-        } else if (u.contem(u.pendentes, this)) {// Se "u" possui um convite do usuário
-            throw new PedidoJaExistenteException(
-                    "Já existe um pedido pendente. Aguarde a aceitação do usuário solicitado.");// falha
-        } else if (u.contem(u.amigos, this) && this.contem(amigos, u)) {// Se ambos são amigos
-            throw new JaSaoAmigosException("Você e o usuário solicitado já são amigos.");// falha
+            return false;//corresponde à aceitação do pedido de amizade
+        } else if (u.contem(u.pendentes, this)) {//Se "u" possui um convite do usuário
+            throw new PedidoJaExistenteException("Já existe um pedido pendente. Aguarde a aceitação do usuário solicitado.");//falha
+        } else if (u.contem(u.amigos, this) && this.contem(amigos, u)) {//Se ambos são amigos
+            throw new JaSaoAmigosException("Você e o usuário solicitado já são amigos.");//falha
         } else {
             u.adicionarPendente(this);
-            return true;// Pedido enviado e pendente
+            return true;//Pedido enviado e pendente
         }
     }
 
@@ -92,15 +90,11 @@ public class Usuario {
         recados.add(recado);
     }
 
-    public void limparRecados() throws ListaVaziaException {
-        if (isEmpty(recados)) {
-            throw new ListaVaziaException("Lista vazia");
-        } else {
-            recados.clear();
-        }
+    public void limparRecados() {
+        recados.clear();
     }
 
-    @Override // Comparador de usuários utilizando equals com o login
+    @Override //Comparador de usuários utilizando equals com o login
     public boolean equals(Object o) {
         Usuario u = (Usuario) o;
         return this.login.equals(u.login);
@@ -111,57 +105,40 @@ public class Usuario {
         return getLogin() + "\n";
     }
 
-    public String listaDeAmigos() throws ListaVaziaException {// Exibir amigos
+    public String listaDeAmigos() {//Exibir amigos
         String list = "";
-        if (isEmpty(amigos)) {
-            throw new ListaVaziaException("Lista vazia");
-        } else {
-            for (Usuario u : amigos) {
-                list += u.toString();
-            }
+        for (Usuario u : amigos) {
+            list += u.toString();
         }
         return list;
     }
 
-    public String listaDePendentes() throws ListaVaziaException {// Exibir pendentes
+    public String listaDePendentes() {//Exibir pendentes
         String list = "";
-        if (isEmpty(amigos)) {
-            throw new ListaVaziaException("Lista vazia");
-        } else {
-            for (Usuario u : pendentes) {
-                list += u.toString();
-            }
+        for (Usuario u : pendentes) {
+            list += u.toString();
         }
         return list;
     }
 
-    public String listaRecados() throws ListaVaziaException {// Exibir pendentes
+    public String listaRecados() {//Exibir pendentes
         String list = "";
-        if (isEmpty(recados)) {
-            throw new ListaVaziaException("Lista vazia");
-        } else {
-            for (int i = 0; i < recados.size(); i++) {
-                list += (i + 1) + " - " + recados.get(i).toString() + "\n";/////
-            }
-            return list;
+        for (int i = 0; i < recados.size(); i++) {
+            list += (i + 1) + " - " + recados.get(i).toString() + "\n";/////
         }
+        return list;
     }
 
-    public String listaMurais() throws ListaVaziaException {// Exibir murais
+    public String listaMurais() {//Exibir murais
         String list = "";
-        if (isEmpty(murais)) {
-            throw new ListaVaziaException("Lista vazia.");
-        } else {
-            for (int i = 0; i < murais.size(); i++) {
-                list += murais.get(i) + "\n";
-            }
-            return list;
+        for (int i = 0; i < murais.size(); i++) {
+            list += murais.get(i) + "\n";
         }
+        return list;
     }
 
     public void adicionarMural(String mural) {
         murais.add(mural);
-
     }
 
     public void limparMural() throws ListaVaziaException {
@@ -172,8 +149,7 @@ public class Usuario {
         }
     }
 
-    public String decodificar(int indice, String palavraChave)
-            throws ListaVaziaException, MensagemNaoSecretaException, SenhaInvalidaException {/////
+    public String decodificar(int indice, String palavraChave) throws ListaVaziaException, MensagemNaoSecretaException, SenhaInvalidaException {/////
         if (isEmpty(recados)) {
             throw new ListaVaziaException("Lista vazia");
         } else if (!indiceValido(indice, recados.size())) {
@@ -189,26 +165,22 @@ public class Usuario {
         }
     }
 
-    public String listaDeMatches() throws ListaVaziaException {
+    public String listaDeMatches(){
         String list = "";
-        if (isEmpty(matches)) {
-            throw new ListaVaziaException("Lista vazia.");
-        } else {
-            for (Usuario u : matches) {
-                list += u.toString();
-            }
-            return list;
+        for (Usuario u : matches){
+            list += u.toString();
         }
+        return list;
     }
 
-    public boolean adicionarMatch(Usuario u) throws MatchJaFeitoException, JaPossuemMatchException {
-        if (this.contem(meusMatches, u)) {// Se "u" possui um match pendente do usuário
+    public boolean adicionarMatch(Usuario u) throws MatchJaFeitoException, JaPossuemMatchException{
+        if (this.contem(meusMatches, u)) {//Se "u" possui um match pendente do usuário
             throw new MatchJaFeitoException("Solicitação de match já feita anteriormente.");
-        } else if (this.contem(matches, u)) {// Se ambos ja tinham match
+        } else if (this.contem(matches,u)) {//Se ambos ja tinham match
             throw new JaPossuemMatchException("Match já existente anteriormente.");
         } else {
             meusMatches.add(u);
-            if (this.contem(meusMatches, u) && u.contem(u.meusMatches, this)) {// Se já existe um match pendente de "u"
+            if (this.contem(meusMatches, u) && u.contem(u.meusMatches, this)) {//Se já existe um match pendente de "u"
                 this.matches.add(u);
                 u.matches.add(this);
                 meusMatches.remove(u);
@@ -219,16 +191,12 @@ public class Usuario {
         }
     }
 
-    public String listaDeMeusMatches() throws ListaVaziaException {
+    public String listaDeMeusMatches(){
         String list = "";
-        if (isEmpty(meusMatches)) {
-            throw new ListaVaziaException("Lista vazia.");
-        } else {
-            for (Usuario u : meusMatches) {
-                list += u.toString();
-            }
-            return list;
+        for (Usuario u : meusMatches){
+            list += u.toString();
         }
+        return list;
     }
 
     public boolean indiceValido(int i, int tamanho) {

@@ -12,26 +12,19 @@ import java.util.Scanner;
 public class RecadosView {
 
     public void recados(Scanner in, String logado, int op, PrincipalController controllerPrincipal) {
+        String exibirLista;
         String login;
         String recado;
         String palavraChave;
+        int indiceMensagem;
         switch (op) {
             case 0:// Sair
                 break;
             case 1:// Exibir recados
-                Thread t3 = new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            String exibirLista = controllerPrincipal.exibirRecados(logado);
-                            System.out.println("Mensagens recentes serão sempre as que estão mais em baixo.");
-                            System.out.println("Recados:");
-                            System.out.println(exibirLista);
-                        } catch (ListaVaziaException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
-                });
-                t3.start();
+                exibirLista = controllerPrincipal.exibirRecados(logado);
+                System.out.println("Mensagens recentes serão sempre as que estão mais em baixo.");
+                System.out.println("Recados:");
+                System.out.println(exibirLista);
                 break;
 
             case 2: // Enviar recado /////
@@ -71,44 +64,28 @@ public class RecadosView {
                 }
                 break;
             case 3:// Limpar caixa de recados
-                Thread t1 = new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            controllerPrincipal.excluirRecados(logado);
-                            System.out.println("Seus recados foram todos excluídos.");
-                        } catch (ListaVaziaException e) {
-                            System.out.println(e.getMessage());
-
-                        }
-                    }
-                });
-                t1.start();
+                controllerPrincipal.excluirRecados(logado);
+                System.out.println("Seus recados foram todos excluídos.");
                 break;
 
             case 4: /////
                 in.nextLine();
-                Thread t = new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            String exibirLista = controllerPrincipal.exibirRecados(logado);
-                            System.out.println("Mensagens recentes serão sempre as que estão mais em baixo.");
-                            System.out.println("Recados:");
-                            System.out.println(exibirLista);
-                            System.out.println("Insira o número da mensagem a ser decodificada: ");
-                            int indiceMensagem = in.nextInt();
-                            indiceMensagem--;
-                            System.out.println("Digite a palavra-chave da mensagem: ");
-                            in.nextLine();
-                            String palavraChave = in.next();
-                            String result = controllerPrincipal.decodificarRecado(logado, indiceMensagem, palavraChave);
-                            System.out.println(result + "\n");
-                        } catch (IndexOutOfBoundsException | MensagemNaoSecretaException | SenhaInvalidaException
-                                | ListaVaziaException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
-                });
-                t.start();
+                try {
+                    exibirLista = controllerPrincipal.exibirRecados(logado);
+                    System.out.println("Mensagens recentes serão sempre as que estão mais em baixo.");
+                    System.out.println("Recados:");
+                    System.out.println(exibirLista);
+                    System.out.println("Insira o número da mensagem a ser decodificada: ");
+                    indiceMensagem = in.nextInt();
+                    indiceMensagem--;
+                    System.out.println("Digite a palavra-chave da mensagem: ");
+                    in.nextLine();
+                    palavraChave = in.next();
+                    String result = controllerPrincipal.decodificarRecado(logado, indiceMensagem, palavraChave);
+                    System.out.println(result + "\n");
+                } catch (IndexOutOfBoundsException | MensagemNaoSecretaException | SenhaInvalidaException | ListaVaziaException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
         }
     }

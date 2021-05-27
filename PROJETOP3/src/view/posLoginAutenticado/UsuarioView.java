@@ -95,6 +95,13 @@ public class UsuarioView extends MenuView {
         System.out.println("0 - Voltar");
     }
 
+    public void menuEditar() {
+        System.out.println("O que deseja editar? ");
+        System.out.println("1 - Apenas o Nome;");
+        System.out.println("2 - Apenas a senha;");
+        System.out.println("3 - Nome e senha.");
+    }
+
     public void menuMural() {
         System.out.println("Menu de Murais:");
         System.out.println("1 - Ver Murais");
@@ -109,13 +116,6 @@ public class UsuarioView extends MenuView {
         System.out.println("2 - Adicionar um Match");
         System.out.println("3 - Meus Matches");
         System.out.println("0 - Voltar");
-    }
-
-    public void menuEditar() {
-        System.out.println("O que deseja editar? ");
-        System.out.println("1 - Apenas o Nome;");
-        System.out.println("2 - Apenas a senha;");
-        System.out.println("3 - Nome e senha.");
     }
 
     public void menu() {

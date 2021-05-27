@@ -4,7 +4,6 @@ import controller.exceptions.AutoRequisicaoException;
 import controller.exceptions.LoginInvalidoException;
 import controller.controlador.PrincipalController;
 import model.exceptions.JaSaoAmigosException;
-import model.exceptions.ListaVaziaException;
 import model.exceptions.PedidoJaExistenteException;
 
 import java.util.Scanner;
@@ -13,28 +12,23 @@ public class AmigosView {
 
     public void amigos(Scanner in, String logado, int op, PrincipalController controllerPrincipal) {
         String login;
-
+        boolean pedidoPendente;
+        String exibirLista;
         switch (op) {
             case 1:// Adicionar amigo
                 in.nextLine();
                 System.out.println("Informe o login do usuário a ser adicionado:");
                 login = in.next();
-                Thread t = new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            boolean pedidoPendente = controllerPrincipal.adicionarAmigo(login, logado);
-                            if (pedidoPendente) {
-                                System.out.println("Pedido de amizade enviado. Aguardando aceitação.");
-                            } else {
-                                System.out.println("Pedido de amizade aceito! Vocês agora são amigos.");
-                            }
-                        } catch (AutoRequisicaoException | LoginInvalidoException | JaSaoAmigosException
-                                | PedidoJaExistenteException e) {
-                            System.out.println(e.getMessage());
-                        }
+                try {
+                    pedidoPendente = controllerPrincipal.adicionarAmigo(login, logado);
+                    if (pedidoPendente) {
+                        System.out.println("Pedido de amizade enviado. Aguardando aceitação.");
+                    } else {
+                        System.out.println("Pedido de amizade aceito! Vocês agora são amigos.");
                     }
-                });
-                t.start();
+                } catch (AutoRequisicaoException | LoginInvalidoException | JaSaoAmigosException | PedidoJaExistenteException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
 
             case 2:
@@ -49,35 +43,16 @@ public class AmigosView {
                     case 0:// Sair
                         break;
                     case 1:// Exibir lista de amigos
-                        Thread t1 = new Thread(new Runnable() {
-                            public void run() {
-                                try {
-                                    String exibirLista = controllerPrincipal.exibirAmigos(logado);
-                                    System.out.println("Lista de amigos: ");
-                                    System.out.println(exibirLista);
-                                } catch (ListaVaziaException e) {
-                                    System.out.println(e.getMessage());
-                                }
-                            }
-                        });
-                        t1.run();
-
+                        exibirLista = controllerPrincipal.exibirAmigos(logado);
+                        System.out.println("Lista de amigos: ");
+                        System.out.println(exibirLista);
                         break;
                     case 2: // Exibir pendentes
-                        Thread t2 = new Thread(new Runnable() {
-                            public void run() {
-                                try {
-                                    String exibirLista1 = controllerPrincipal.exibirPendentes(logado);
-                                    System.out.println(
-                                            "Envie convites para remover a pendência e que vocês sejam amigos!");
-                                    System.out.println("Há convites de amizade pendentes de:");
-                                    System.out.println(exibirLista1);
-                                } catch (ListaVaziaException e) {
-                                    System.out.println(e.getMessage());
-                                }
-                            }
-                        });
-                        t2.run();
+                        exibirLista = controllerPrincipal.exibirPendentes(logado);
+                        System.out.println(
+                                "Envie convites para remover a pendência e que vocês sejam amigos!");
+                        System.out.println("Há convites de amizade pendentes de:");
+                        System.out.println(exibirLista);
                         break;
                 }
                 break;
