@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class PrincipalController {
-    public List<Usuario> usuarios;
+    private List<Usuario> usuarios;
 
     public PrincipalController() {
         usuarios = new ArrayList<>();
