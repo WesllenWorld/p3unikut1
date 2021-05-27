@@ -9,7 +9,8 @@ import java.util.Scanner;
 public class CadastrarAdmView {
 
     public void cadastrar(Scanner in, PrincipalController controllerPrincipal) {
-        String login, senha, nome, codigoDeAdmin;
+        String login, senha, nome, nomeFinal, codigoDeAdmin;
+        Thread t;
 
         in.nextLine();
         System.out.println("Insira os seguintes dados para criar sua conta de administrador:");
@@ -24,13 +25,20 @@ public class CadastrarAdmView {
         if (nome.equals("")) {
             nome = "Convidado";
         }
+        nomeFinal = nome;
         System.out.println("Digite o código de autenticação de criação do administrador:");
         codigoDeAdmin = in.next();
-        try {
-            controllerPrincipal.cadastro(login, senha, nome, codigoDeAdmin);
-            System.out.println("Cadastro concluído com sucesso.");
-        } catch (CodigoAdmErradoException | UsuarioExistenteException e) {
-            System.out.println(e.getMessage());
-        }
+        t = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    controllerPrincipal.cadastro(login, senha, nomeFinal, codigoDeAdmin);
+                    System.out.println("Cadastro concluído com sucesso.");
+                } catch (CodigoAdmErradoException | UsuarioExistenteException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+        t.start();
+
     }
 }

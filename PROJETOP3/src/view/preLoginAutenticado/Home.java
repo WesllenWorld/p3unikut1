@@ -13,9 +13,9 @@ public class Home {
         int op;
 
         PrincipalController controllerPrincipal = new PrincipalController();
-        LoginView viewLogin = new LoginView();
-        CadastrarView viewCadastrar = new CadastrarView();
-        CadastrarAdmView viewCadastrarAdm = new CadastrarAdmView();
+        view.preLoginAutenticado.LoginView viewLogin = new LoginView();
+        view.preLoginAutenticado.CadastrarView viewCadastrar = new CadastrarView();
+        view.preLoginAutenticado.CadastrarAdmView viewCadastrarAdm = new CadastrarAdmView();
 
         do {
             menuInicial();

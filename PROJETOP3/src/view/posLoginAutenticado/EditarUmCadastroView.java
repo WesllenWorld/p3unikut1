@@ -7,7 +7,8 @@ import java.util.Scanner;
 public class EditarUmCadastroView {
 
     public void editarOutroPerfil(PrincipalController controllerPrincipal, Scanner in, String login, int op) {
-        String senha, nome;
+        String senha, nome, nomeFinal;
+        Thread t;
 
         switch (op) {
             case 1:// Editar nome
@@ -18,16 +19,27 @@ public class EditarUmCadastroView {
                 if (nome.equals("")) {
                     nome = "convidado";
                 }
-                controllerPrincipal.editarCadastro(login, senha, nome);
-                System.out.println("Perfil editado com sucesso.");
+                nomeFinal = nome;
+                t = new Thread(new Runnable() {
+                    public void run() {
+                        controllerPrincipal.editarCadastro(login, senha, nomeFinal);
+                        System.out.println("Seu cadastro foi atualizado.");
+                    }
+                });
+                t.start();
                 break;
             case 2:// Editar senha
-                nome = null;
+                nomeFinal = null;
                 in.nextLine();
                 System.out.println("Digite a nova senha: ");
                 senha = in.next();
-                controllerPrincipal.editarCadastro(login, senha, nome);
-                System.out.println("Perfil editado com sucesso.");
+                t = new Thread(new Runnable() {
+                    public void run() {
+                        controllerPrincipal.editarCadastro(login, senha, nomeFinal);
+                        System.out.println("Seu cadastro foi atualizado.");
+                    }
+                });
+                t.start();
                 break;
             case 3:// Editar nome e senha
                 in.nextLine();
@@ -36,10 +48,16 @@ public class EditarUmCadastroView {
                 if (nome.equals("")) {
                     nome = "convidado";
                 }
+                nomeFinal = nome;
                 System.out.println("Digite a nova senha: ");
                 senha = in.next();
-                controllerPrincipal.editarCadastro(login, senha, nome);
-                System.out.println("Perfil editado com sucesso.");
+                t = new Thread(new Runnable() {
+                    public void run() {
+                        controllerPrincipal.editarCadastro(login, senha, nomeFinal);
+                        System.out.println("Seu cadastro foi atualizado.");
+                    }
+                });
+                t.start();
                 break;
         }
     }

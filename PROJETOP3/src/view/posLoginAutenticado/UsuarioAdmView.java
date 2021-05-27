@@ -6,20 +6,19 @@ import controller.exceptions.LoginInvalidoException;
 
 import java.util.Scanner;
 
-public class UsuarioAdmView extends MenuView{
+public class UsuarioAdmView extends MenuView {
 
-
-    public void usuario(String logado, PrincipalController controllerPrincipal, Scanner in){
+    public void usuario(String logado, PrincipalController controllerPrincipal, Scanner in) {
         int acaoDeConta, op;
         String login;
         boolean buscadoEAdmin;
 
-        EditarPerfilView viewEditarPerfil = new EditarPerfilView();
-        AmigosView viewAmigos = new AmigosView();
-        RecadosView viewRecados = new RecadosView();
-        MuraisView viewMurais = new MuraisView();
-        EditarUmCadastroView viewEditarUmCadastro = new EditarUmCadastroView();
-        MatchView viewMatch = new MatchView();
+        view.posLoginAutenticado.EditarPerfilView viewEditarPerfil = new EditarPerfilView();
+        view.posLoginAutenticado.AmigosView viewAmigos = new AmigosView();
+        view.posLoginAutenticado.RecadosView viewRecados = new RecadosView();
+        view.posLoginAutenticado.MuraisView viewMurais = new MuraisView();
+        view.posLoginAutenticado.EditarUmCadastroView viewEditarUmCadastro = new EditarUmCadastroView();
+        view.posLoginAutenticado.MatchView viewMatch = new MatchView();
 
         do {
             menu();
@@ -127,12 +126,14 @@ public class UsuarioAdmView extends MenuView{
 
         } while (acaoDeConta != 0);
     }
+
     public void menuAmigos() {
         System.out.println("Menu de amigos:");
         System.out.println("1 - Adicionar amigos");
         System.out.println("2 - Listar amigos ou pedidos de amizade pendentes");
         System.out.println("0 - Voltar");
     }
+
     public void menuRecados() {
         System.out.println("Menu de recados:");
         System.out.println("1 - Ver recados");
@@ -171,7 +172,7 @@ public class UsuarioAdmView extends MenuView{
         System.out.println("0 - Voltar");
     }
 
-    public void menu(){
+    public void menu() {
         System.out.println("Funções disponíveis:");
         System.out.println("1 – Editar perfil");
         System.out.println("2 – Amigos");

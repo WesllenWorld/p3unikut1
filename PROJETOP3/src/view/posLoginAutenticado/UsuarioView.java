@@ -9,11 +9,11 @@ public class UsuarioView extends MenuView {
     public void usuario(String logado, PrincipalController controllerPrincipal, Scanner in) {
         int acaoDeConta;
 
-        EditarPerfilView viewEditarPerfil = new EditarPerfilView();
-        AmigosView viewAmigos = new AmigosView();
-        RecadosView viewRecados = new RecadosView();
-        MuraisView viewMurais = new MuraisView();
-        MatchView viewMatch = new MatchView();
+        view.posLoginAutenticado.EditarPerfilView viewEditarPerfil = new EditarPerfilView();
+        view.posLoginAutenticado.AmigosView viewAmigos = new AmigosView();
+        view.posLoginAutenticado.RecadosView viewRecados = new RecadosView();
+        view.posLoginAutenticado.MuraisView viewMurais = new MuraisView();
+        view.posLoginAutenticado.MatchView viewMatch = new MatchView();
 
         do {
             menu();
@@ -95,13 +95,6 @@ public class UsuarioView extends MenuView {
         System.out.println("0 - Voltar");
     }
 
-    public void menuEditar() {
-        System.out.println("O que deseja editar? ");
-        System.out.println("1 - Apenas o Nome;");
-        System.out.println("2 - Apenas a senha;");
-        System.out.println("3 - Nome e senha.");
-    }
-
     public void menuMural() {
         System.out.println("Menu de Murais:");
         System.out.println("1 - Ver Murais");
@@ -116,6 +109,13 @@ public class UsuarioView extends MenuView {
         System.out.println("2 - Adicionar um Match");
         System.out.println("3 - Meus Matches");
         System.out.println("0 - Voltar");
+    }
+
+    public void menuEditar() {
+        System.out.println("O que deseja editar? ");
+        System.out.println("1 - Apenas o Nome;");
+        System.out.println("2 - Apenas a senha;");
+        System.out.println("3 - Nome e senha.");
     }
 
     public void menu() {

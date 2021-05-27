@@ -6,7 +6,9 @@ import java.util.Scanner;
 public class CadastrarView {
 
     public void cadastrar(Scanner in, PrincipalController controllerPrincipal){
-        String login, senha, nome;
+        String login, senha, nome, nomeFinal;
+        Thread t;
+
 
         in.nextLine();
         System.out.println("Insira os seguintes dados para criar sua conta:");
@@ -21,12 +23,17 @@ public class CadastrarView {
         if (nome.equals("")) {
             nome = "Convidado";
         }
-        try {
-            controllerPrincipal.cadastro(login, senha, nome);
-            System.out.println("Cadastro concluído com sucesso.");
-        } catch (UsuarioExistenteException e) {
-            System.out.println("Já existe um usuário com o login utilizado. Cadastro não efetuado.");
-        }
-
+        nomeFinal = nome;
+        t = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    controllerPrincipal.cadastro(login, senha, nomeFinal);
+                    System.out.println("Cadastro concluído com sucesso.");
+                } catch (UsuarioExistenteException e) {
+                    System.out.println("Já existe um usuário com o login utilizado. Cadastro não efetuado.");
+                }
+            }
+        });
+        t.start();
     }
 }
