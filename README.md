@@ -1,2 +1,2 @@
 # p3unikut1
-Em resumo: Implementações do Unikut, referentes à disciplina de Programação III na Universidade Católica de Pernambuco (UNICAP)
+Implementações do Unikut - Rede social em linha de código, referente à disciplina de Programação III na Universidade Católica de Pernambuco (UNICAP).
